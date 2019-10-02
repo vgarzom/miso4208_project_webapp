@@ -34,7 +34,7 @@
       <div nz-row class="content padding">
         <nz-descriptions [nzColumn]="2">
           <nz-descriptions-item nzTitle="Solicitada por" [nzSpan]="1">{{lastTest.requester}}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="identificador" [nzSpan]="1"><a>{{lastTest._id}}</a></nz-descriptions-item>
+          <nz-descriptions-item nzTitle="identificador" [nzSpan]="1"><button nz-button nzType="link" (click)="goToSelectedTest(lastTest._id)">{{lastTest._id}}</button></nz-descriptions-item>
           <nz-descriptions-item nzTitle="Inicio" [nzSpan]="1">{{lastTest.reporterStats.start | date:'medium'}}
           </nz-descriptions-item>
           <nz-descriptions-item nzTitle="Fin" [nzSpan]="1">{{lastTest.reporterStats.end | date:'medium'}}
@@ -84,7 +84,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of testsTable.data" (click)="showCarousel(data)">
+      <tr *ngFor="let data of testsTable.data" (click)="goToSelectedTest(data._id)">
         <td>
           {{data._id}}
         </td>

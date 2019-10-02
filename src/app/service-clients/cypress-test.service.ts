@@ -23,6 +23,17 @@ export class CypressTestService {
     )
   }
 
+  getById(id:string, callback, errorCallback): void {
+    this.http.get(`/api/cypress-test/id/${id}`).subscribe(
+      (res) => {
+        callback(res);
+      },
+      (err) => {
+        errorCallback(err);
+      }
+    )
+  }
+
   getAll(callback, errorCallback): void {
     this.http.get(`/api/cypress-test`).subscribe(
       (res) => {

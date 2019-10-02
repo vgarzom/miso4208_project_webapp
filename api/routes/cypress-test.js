@@ -161,4 +161,14 @@ router.get('/last', function (req, res, next) {
   }).sort('-creation_date');
 });
 
+router.get('/id/:id', function (req, res, next) {
+  CypressTest.findById(req.params.id, function (err, post) {
+    if (err) {
+      res.json({ code: 400, message: "Error consultando", error: err })
+    } else {
+      res.json(post);
+    }
+  });
+});
+
 module.exports = router;

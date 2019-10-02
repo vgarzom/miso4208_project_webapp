@@ -4,6 +4,7 @@ import { CypressTest } from '../../../../api/models/cypress-test.model';
 import { OnTestCreatedService } from 'src/app/service-clients/ont-test-created.service';
 import { Subscription } from 'rxjs';
 import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-list',
@@ -29,7 +30,8 @@ export class TestListComponent implements OnInit, OnDestroy {
     private cypressTestService: CypressTestService,
     private onTestCreatedService: OnTestCreatedService,
     private modalService: NzModalService,
-    private notification: NzNotificationService
+    private notification: NzNotificationService,
+    private router: Router
   ) { }
 
   showConfirm(tplContent: TemplateRef<{}>): void {
@@ -63,6 +65,9 @@ export class TestListComponent implements OnInit, OnDestroy {
     let interval = setInterval(() => {
       this.newTestTempProgress += (this.intervalTime / this.maxTime) * 100;
       this.newTestProgress = Math.round(this.newTestTempProgress);
+      if (this.newTestProgress > 95) {
+        this.newTestProgress = 95;
+      }
     }, this.intervalTime);
 
     this.cypressTestService.create({ requester: this.requesterName }, (res) => {
@@ -167,7 +172,6 @@ export class TestListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.onTestCreatedSubscription.unsubscribe();
   }
 
   updateTestsList(): void {
@@ -224,6 +228,10 @@ export class TestListComponent implements OnInit, OnDestroy {
         )
       }
     }, 100);
+  }
+
+  goToSelectedTest(id:String):void {
+    this.router.navigate(['/todoist/'+id]);
   }
 
 }

@@ -1,0 +1,66 @@
+<div class="inner-content">
+  <h2>Descripción de la prueba</h2>
+  <nz-card *ngIf="loadingStatus === 'loading'">
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+  </nz-card>
+  <nz-card nzTitle="Solicitada por: {{cypresstest.requester}}" *ngIf="loadingStatus === 'found'"
+    [nzExtra]="extraCardTemplate">
+
+    <nz-descriptions [nzColumn]="2">
+      <nz-descriptions-item nzTitle="identificador" [nzSpan]="1">{{cypresstest._id}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Inicio" [nzSpan]="1">{{cypresstest.reporterStats.start | date:'medium'}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Fin" [nzSpan]="1">{{cypresstest.reporterStats.end | date:'medium'}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Duración de la prueba" [nzSpan]="1">{{cypresstest.reporterStats.duration}}
+        milisegundos</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Resumen" [nzSpan]="2">
+        <nz-badge [nzCount]="cypresstest.reporterStats.suites" class="summary-badge" nzShowZero
+          [nzStyle]="getSummaryBackgroundStyle('suites')">
+          <nz-tag [nzColor]="'#108ee9'">Suites</nz-tag>
+        </nz-badge>
+        <nz-badge [nzCount]="cypresstest.reporterStats.tests" class="summary-badge" nzShowZero
+          [nzStyle]="getSummaryBackgroundStyle('tests')">
+          <nz-tag [nzColor]="'#108ee9'">Tests</nz-tag>
+        </nz-badge>
+        <nz-badge [nzCount]="cypresstest.reporterStats.passes" class="summary-badge" nzShowZero
+          [nzStyle]="getSummaryBackgroundStyle('passes')">
+          <nz-tag [nzColor]="'#108ee9'">Passes</nz-tag>
+        </nz-badge>
+        <nz-badge [nzCount]="cypresstest.reporterStats.pending" class="summary-badge" nzShowZero
+          [nzStyle]="getSummaryBackgroundStyle('pending')">
+          <nz-tag [nzColor]="'#108ee9'">Pending</nz-tag>
+        </nz-badge>
+        <nz-badge [nzCount]="cypresstest.reporterStats.failures" class="summary-badge" nzShowZero
+          [nzStyle]="getSummaryBackgroundStyle('failures')">
+          <nz-tag [nzColor]="'#108ee9'">Failures</nz-tag>
+        </nz-badge>
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </nz-card>
+
+  <ng-template #extraCardTemplate>
+    <nz-tag [nzColor]="'orange'" *ngIf="cypresstest.status === 'in-progress'">En progreso</nz-tag>
+    <nz-tag [nzColor]="'red'" *ngIf="cypresstest.status === 'failed'">Falló</nz-tag>
+    <nz-tag [nzColor]="'green'" *ngIf="cypresstest.status === 'success'">Exitosa</nz-tag>
+    <span>{{getTimeFromTest()}}</span>
+  </ng-template>
+
+  <br />
+  <h2>Screenshots</h2>
+  <div *ngIf="loadingStatus === 'found' && cypresstest" nz-row>
+    <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="8" nzXl="6" *ngFor="let screenshot of cypresstest.screenshots; let i = index">
+      <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate">
+        <nz-card-meta nzTitle="screenshot {{i + 1}}" [nzDescription]="screenshot.name"></nz-card-meta>
+      </nz-card>
+
+      <ng-template #coverTemplate>
+          <img src="public/{{screenshot.name}}" [ngStyle]="{ width: '100%' }" />
+        </ng-template>
+    </div>
+  </div>
+  <nz-empty *ngIf="loadingStatus === 'found' && cypresstest.screenshots.length === 0"></nz-empty>
+
+
+  
+</div>
