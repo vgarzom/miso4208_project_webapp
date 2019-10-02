@@ -7,10 +7,23 @@
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+      <li nz-submenu nzOpen nzTitle="Aplicaciones" nzIcon="dashboard">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/list">Tests</a>
+            <a routerLink="/todois">Todois</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/redread">RedRead</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Casos de prueba" nzIcon="dashboard">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/todois-cypress">Todois (Cypress)</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/redread-cypress">RedRead (Calabash)</a>
           </li>
         </ul>
       </li>
