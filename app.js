@@ -8,13 +8,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-const db = {
-  host: process.env.vregression_db_host,
-  database: process.env.vregression_db_name,
-  password: process.env.vregression_db_pass,
-  user: process.env.vregression_db_user,
-  port: process.env.vregression_db_port
-}
+const db_connection = process.env.miso4208_exam1_db;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -31,13 +25,9 @@ app.get('*', (req, res) => {
 
 // Mongoose configuration
 mongoose.Promise = require('bluebird');
-let connectionStr = `mongodb://${db.user}:${db.password}@${db.host}:${db.port}/${db.database}`;
-if (db.host === "localhost") {
-  connectionStr = `mongodb://${db.host}:${db.port}/${db.database}`;
-}
 
-mongoose.connect(connectionStr, { useNewUrlParser: true, promiseLibrary: require('bluebird') })
-  .then(() => console.log('connection to ' + db.database + ' succesful'))
+mongoose.connect(db_connection, { useNewUrlParser: true, promiseLibrary: require('bluebird') })
+  .then(() => console.log('connection to database succesful'))
   .catch((err) => console.error(err));
 
 /**

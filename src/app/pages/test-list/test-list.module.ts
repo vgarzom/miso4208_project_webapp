@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { TestListComponent } from './test-list.component';
 import { TestListRoutingModule } from './test-list-routing.module';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -12,7 +13,8 @@ import { NgZorroAntdModule, NZ_I18N, es_ES } from 'ng-zorro-antd';
   imports: [
     CommonModule,
     TestListRoutingModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    FormsModule
   ],
   exports: [
     TestListComponent

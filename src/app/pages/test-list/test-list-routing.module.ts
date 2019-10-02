@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TestListComponent } from './test-list.component';
 
 const routes: Routes = [
-  { path: '', component: TestListComponent },
+  { path: '', component: TestListComponent, data: {title: "Pruebas Todoist"} },
 ];
 
 @NgModule({
