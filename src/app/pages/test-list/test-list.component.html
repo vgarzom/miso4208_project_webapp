@@ -76,50 +76,34 @@
   <nz-table #testsTable [nzData]="cypressTests">
     <thead>
       <tr>
-        <th>Prueba</th>
-        <th>Imagen 1</th>
-        <th>Imagen 2</th>
-        <th>Diferencias</th>
+        <th>identificador</th>
+        <th>Solicitado por</th>
+        <th>Inicio</th>
+        <th>Duración</th>
+        <th>Resultados</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of testsTable.data" (click)="showCarousel(data)">
-        <td style="max-width: 600px">
-          <nz-descriptions [nzColumn]="1" nzSize="small" nzBordered>
-            <nz-descriptions-item nzTitle="Solicitada por" [nzSpan]="1">{{data.requester}}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="id" [nzSpan]="1">{{data._id}}</nz-descriptions-item>
-            <nz-descriptions-item nzTitle="inicio" [nzSpan]="1">{{data.reporterStats.start | date:'short'}}
-            </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="duración" [nzSpan]="1">{{data.reporterStats.duration}} ms
-            </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Resumen" [nzSpan]="2">
-              <nz-tag [nzColor]="'orange'" *ngIf="data.status === 'in-progress'">En progreso</nz-tag>
-              <nz-tag [nzColor]="'red'" *ngIf="data.status === 'failed'">Falló</nz-tag>
-              <nz-tag [nzColor]="'green'" *ngIf="data.status === 'success'">Exitosa</nz-tag>
+        <td>
+          {{data._id}}
+        </td>
+        <td>
+          {{data.requester}}
+        </td>
+        <td>
+          {{data.reporterStats.start | date:'medium'}}
+        </td>
+        <td>
+          {{data.reporterStats.duration}}ms
+        </td>
+        <td>
+          <nz-tag [nzColor]="'orange'" *ngIf="data.status === 'in-progress'">En progreso</nz-tag>
+          <nz-tag [nzColor]="'red'" *ngIf="data.status === 'failed'">Falló</nz-tag>
+          <nz-tag [nzColor]="'green'" *ngIf="data.status === 'success'">Exitosa</nz-tag>
 
-              <nz-badge [nzCount]="data.reporterStats.tests" nzShowZero
-                [nzStyle]="getSummaryBackgroundStyle('tests', data)">
-                <nz-tag [nzColor]="'#108ee9'">Tests</nz-tag>
-              </nz-badge>
-              <nz-badge [nzCount]="data.reporterStats.passes" class="summary-badge" nzShowZero
-                [nzStyle]="getSummaryBackgroundStyle('passes', data)">
-                <nz-tag [nzColor]="'#108ee9'">Passes</nz-tag>
-              </nz-badge>
-            </nz-descriptions-item>
-          </nz-descriptions>
-        </td>
-        <td>
-          <div *ngIf="data.screenshots.length > 0"><img [src]="getPath(data, 0)" class="test-image" /></div>
-        </td>
-        <td>
-          <div *ngIf="data.screenshots.length > 1"><img [src]="getPath(data, 1)" class="test-image" /></div>
-        </td>
-        <td>
-          <div *ngIf="data.resemble"><img [src]="getPath(data, 'diff')" class="test-image" /></div>
-          <nz-statistic *ngIf="data.resemble" [nzValue]="data.resemble.rawMisMatchPercentage | number: '1.0-2'"
-            [nzTitle]="'Diferencias'" [nzPrefix]="prefixTplTwo" [nzSuffix]="'%'" [nzValueStyle]="{ color: '#CF1322' }">
-          </nz-statistic>
-
+          <nz-tag [nzColor]="'blue'">Tests: {{data.reporterStats.tests}}</nz-tag>
+          <nz-tag [nzColor]="data.reporterStats.tests === data.reporterStats.passes ? 'green' : 'red'">Passes: {{data.reporterStats.passes}}</nz-tag>
         </td>
       </tr>
     </tbody>
@@ -143,6 +127,6 @@
   <p>Una vez iniciada la prueba no podrá detenerse o cancelarse.</p>
   <p>Ingresa tu nombre completo para continuar:</p>
   <nz-input-group [nzAddOnBeforeIcon]="'user'">
-      <input type="text" nz-input [(ngModel)]="requesterName" />
-    </nz-input-group>
+    <input type="text" nz-input [(ngModel)]="requesterName" />
+  </nz-input-group>
 </ng-template>
