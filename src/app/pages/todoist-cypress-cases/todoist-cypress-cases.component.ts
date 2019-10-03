@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UploadFile, NzMessageService, UploadFilter } from 'ng-zorro-antd';
-import { HttpRequest, HttpResponse, HttpClient, HttpHeaders, HttpEventType, HttpHeaderResponse } from '@angular/common/http';
-import { filter, map, catchError } from 'rxjs/operators';
+import { HttpRequest, HttpClient, HttpHeaders, HttpEventType, HttpHeaderResponse } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { Observable, Observer } from 'rxjs';
+import { CypressSpecModel } from '../../../../api/models/cypress-spec.model';
+import { TodoistCypressCaseService } from 'src/app/service-clients/todoist-cypress-case.service copy';
 
 @Component({
   selector: 'app-todoist-cypress-cases',
@@ -16,6 +18,7 @@ export class TodoistCypressCasesComponent implements OnInit {
   fileList: UploadFile[] = [];
   uploading: boolean = false;
   uploadPercentage: number = 0;
+  cases: CypressSpecModel[] = [];
 
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = [];
@@ -26,7 +29,9 @@ export class TodoistCypressCasesComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
-    private msg: NzMessageService) {
+    private msg: NzMessageService,
+    private todoistCypressCaseService: TodoistCypressCaseService
+    ) {
 
   }
 
@@ -35,6 +40,20 @@ export class TodoistCypressCasesComponent implements OnInit {
       name: [null, [Validators.required]],
       description: [null, [Validators.required]]
     });
+
+    this.updateList();
+  }
+
+
+  updateList(): void {
+    
+    this.todoistCypressCaseService.getAll(
+      res => {
+        this.cases = res;
+      },
+      err => {
+        console.log("error consultando");
+      });
   }
 
   submitForm(): void {
@@ -123,10 +142,13 @@ export class TodoistCypressCasesComponent implements OnInit {
                 name: [null, [Validators.required]],
                 description: [null, [Validators.required]]
               });
-              this.msg.success('upload successfully.');
+              this.msg.success('Caso de prueba creado satisfactoriamente.');
+              setTimeout(() => {
+                this.updateList();
+              }, 500);
             } else {
               this.uploading = false;
-              this.msg.error('upload failed.');
+              this.msg.error('Ocurrió un error al crear el caso de pruebas.');
             }
           }
         })

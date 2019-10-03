@@ -15,11 +15,6 @@ var storage = multer.diskStorage(
 
 var upload = multer({ storage: storage }).array('file', 1);
 
-router.get('/', function (req, res, next) {
-  // render the index page, and pass data to it.
-  res.render('index', { title: 'Express' });
-});
-
 //our file upload function.
 router.post('/', function (req, res, next) {
 
@@ -42,5 +37,13 @@ router.post('/', function (req, res, next) {
       }
     });
   })
-})
+});
+
+router.get('/', function (req, res, next) {
+  CypressSpecModel.find(function (err, products) {
+    if (err) return next(err);
+    res.json(products);
+  }).sort('-creation_date');
+});
+
 module.exports = router;
