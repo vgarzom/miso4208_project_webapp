@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { CypressTestService } from 'src/app/service-clients/cypress-test.service';
 import { CypressTest } from '../../../../api/models/cypress-test.model';
+import { CypressSpecModel } from '../../../../api/models/cypress-spec.model';
 import { OnTestCreatedService } from 'src/app/service-clients/ont-test-created.service';
 import { Subscription } from 'rxjs';
-import { NzModalService, NzNotificationService } from 'ng-zorro-antd';
+import { NzModalService, NzNotificationService, NzMessageService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
+import { TodoistCypressCaseService } from 'src/app/service-clients/todoist-cypress-case.service copy';
 
 @Component({
   selector: 'app-test-list',
@@ -23,15 +25,19 @@ export class TestListComponent implements OnInit, OnDestroy {
   maxTime: number = 20000; //Max time in milliseconds to create a test.
   intervalTime: number = 50; //Time between progress change
   requesterName: String = "";
+  todoistCases: CypressSpecModel[];
+  todoistSelectedCase: CypressSpecModel = null;
 
   images = [];
   isVisible = false;
   constructor(
     private cypressTestService: CypressTestService,
+    private todoistCypressCaseService: TodoistCypressCaseService,
     private onTestCreatedService: OnTestCreatedService,
     private modalService: NzModalService,
     private notification: NzNotificationService,
-    private router: Router
+    private router: Router,
+    private msg: NzMessageService
   ) { }
 
   showConfirm(tplContent: TemplateRef<{}>): void {
@@ -42,11 +48,10 @@ export class TestListComponent implements OnInit, OnDestroy {
       nzCancelText: 'Cancelar',
       nzOnOk: () => {
         if (this.requesterName === "") {
-          this.notification.blank(
-            '',
-            'Debes ingresar tu nombre para iniciar la prueba',
-            { nzDuration: 3000 }
-          );
+          this.msg.error('Debes ingresar tu nombre para continuar.');
+          return false;
+        } else if (this.todoistSelectedCase === null) {
+          this.msg.error('Debes seleccionar un caso de prueba');
           return false;
         }
         this.initTest();
@@ -70,7 +75,8 @@ export class TestListComponent implements OnInit, OnDestroy {
       }
     }, this.intervalTime);
 
-    this.cypressTestService.create({ requester: this.requesterName }, (res) => {
+    console.log("selected case", this.todoistSelectedCase);
+    this.cypressTestService.create({ requester: this.requesterName, caseId: this.todoistSelectedCase }, (res) => {
       console.log("creation result", res);
       clearInterval(interval);
       this.newTestProgress = 100;
@@ -91,6 +97,7 @@ export class TestListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateTestsList();
+    this.updateCasesList();
   }
 
   getSummaryBackgroundStyle(key: string): any {
@@ -187,6 +194,16 @@ export class TestListComponent implements OnInit, OnDestroy {
           this.lastTest = null;
           this.loadingStatus = "not-found";
         }
+      },
+      err => {
+        console.log("error consultando");
+      });
+  }
+
+  updateCasesList(): void {
+    this.todoistCypressCaseService.getAll(
+      res => {
+        this.todoistCases = res;
       },
       err => {
         console.log("error consultando");

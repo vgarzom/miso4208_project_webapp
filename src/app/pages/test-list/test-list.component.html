@@ -34,7 +34,8 @@
       <div nz-row class="content padding">
         <nz-descriptions [nzColumn]="2">
           <nz-descriptions-item nzTitle="Solicitada por" [nzSpan]="1">{{lastTest.requester}}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="identificador" [nzSpan]="1"><button nz-button nzType="link" (click)="goToSelectedTest(lastTest._id)">{{lastTest._id}}</button></nz-descriptions-item>
+          <nz-descriptions-item nzTitle="identificador" [nzSpan]="1"><button nz-button nzType="link"
+              (click)="goToSelectedTest(lastTest._id)">{{lastTest._id}}</button></nz-descriptions-item>
           <nz-descriptions-item nzTitle="Inicio" [nzSpan]="1">{{lastTest.reporterStats.start | date:'medium'}}
           </nz-descriptions-item>
           <nz-descriptions-item nzTitle="Fin" [nzSpan]="1">{{lastTest.reporterStats.end | date:'medium'}}
@@ -103,7 +104,8 @@
           <nz-tag [nzColor]="'green'" *ngIf="data.status === 'success'">Exitosa</nz-tag>
 
           <nz-tag [nzColor]="'blue'">Tests: {{data.reporterStats.tests}}</nz-tag>
-          <nz-tag [nzColor]="data.reporterStats.tests === data.reporterStats.passes ? 'green' : 'red'">Passes: {{data.reporterStats.passes}}</nz-tag>
+          <nz-tag [nzColor]="data.reporterStats.tests === data.reporterStats.passes ? 'green' : 'red'">Passes:
+            {{data.reporterStats.passes}}</nz-tag>
         </td>
       </tr>
     </tbody>
@@ -125,8 +127,17 @@
 
 <ng-template #tplContent>
   <p>Una vez iniciada la prueba no podrá detenerse o cancelarse.</p>
-  <p>Ingresa tu nombre completo para continuar:</p>
-  <nz-input-group [nzAddOnBeforeIcon]="'user'">
-    <input type="text" nz-input [(ngModel)]="requesterName" />
-  </nz-input-group>
+  <p>Ingresa tu nombre completo y caso de prueba para continuar:</p>
+  <div nz-row nzGutter="16">
+    <nz-input-group [nzAddOnBeforeIcon]="'user'">
+      <input type="text" nz-input [(ngModel)]="requesterName" />
+    </nz-input-group>
+  </div>
+  <br />
+  <div nz-row nzGutter="16">
+    <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona un caso de prueba"
+      [(ngModel)]="todoistSelectedCase">
+      <nz-option *ngFor="let case of todoistCases" [nzLabel]="case.name" [nzValue]="case._id"></nz-option>
+    </nz-select>
+  </div>
 </ng-template>

@@ -5,7 +5,7 @@ describe('color-palett', function () {
     cy.wait(500)
     cy.screenshot("first");
     cy.wait(500)
-    cy.get('.submit_btn').click();
+    cy.screenshot("second");
     cy.wait(500)
     cy.screenshot("second");
   })
