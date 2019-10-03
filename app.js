@@ -16,7 +16,9 @@ app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use("/public", express.static('public'));
-app.use('/api/cypress-test', require('./api/routes/cypress-test'));
+
+//Loading api routes
+app.use("/api", require('./api/routes'));
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

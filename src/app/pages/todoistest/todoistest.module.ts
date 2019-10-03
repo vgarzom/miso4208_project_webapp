@@ -12,8 +12,7 @@ import { TodoisTestRoutingModule } from './todoistest-routing.module';
     CommonModule,
     FormsModule,
     TodoisTestRoutingModule,
-    NgZorroAntdModule,
-    FormsModule
+    NgZorroAntdModule
   ],
   exports: [
     TodoistestComponent

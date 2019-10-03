@@ -47,3 +47,5 @@ Thumbs.db
 
 /public/
 /cypress/screenshots/**/*
+dist.zip
+/cypress/integration/*
