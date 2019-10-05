@@ -6,7 +6,7 @@ import { OnTestCreatedService } from 'src/app/service-clients/ont-test-created.s
 import { Subscription } from 'rxjs';
 import { NzModalService, NzNotificationService, NzMessageService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
-import { TodoistCypressCaseService } from 'src/app/service-clients/todoist-cypress-case.service copy';
+import { TodoistCypressCaseService } from 'src/app/service-clients/todoist-cypress-case.service';
 
 @Component({
   selector: 'app-test-list',

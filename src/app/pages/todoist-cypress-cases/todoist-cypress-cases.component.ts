@@ -5,7 +5,7 @@ import { HttpRequest, HttpClient, HttpHeaders, HttpEventType, HttpHeaderResponse
 import { map } from 'rxjs/operators';
 import { Observable, Observer } from 'rxjs';
 import { CypressSpecModel } from '../../../../api/models/cypress-spec.model';
-import { TodoistCypressCaseService } from 'src/app/service-clients/todoist-cypress-case.service copy';
+import { TodoistCypressCaseService } from 'src/app/service-clients/todoist-cypress-case.service';
 
 @Component({
   selector: 'app-todoist-cypress-cases',
