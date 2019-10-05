@@ -8,7 +8,7 @@
 
   <nz-page-header-subtitle *ngIf="loadingStatus === 'found'">{{getTimeFromLastTest()}}
   </nz-page-header-subtitle>
-  <nz-page-header-tags *ngIf="found && lastTest">
+  <nz-page-header-tags *ngIf="loadingStatus === 'found' && lastTest">
     <nz-tag [nzColor]="'orange'" *ngIf="lastTest.status === 'in-progress'">En progreso</nz-tag>
     <nz-tag [nzColor]="'red'" *ngIf="lastTest.status === 'failed'">Falló</nz-tag>
     <nz-tag [nzColor]="'green'" *ngIf="lastTest.status === 'success'">Exitosa</nz-tag>
