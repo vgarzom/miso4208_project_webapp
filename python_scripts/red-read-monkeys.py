@@ -23,7 +23,7 @@ def executeTest(test, client):
     monkey_tests.update({'_id': test['_id']}, {
                         '$set': {'status': 'in-progress', 'start': datetime.datetime.now()}})
     # Execute monkeys
-    command = ['adb', 'shell', 'monkey', '-p',
+    command = ['/opt/Android/Sdk/platform-tools/adb', 'shell', 'monkey', '-p',
                test['package'], '-v', str(test['monkeys'])]
     p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = p.communicate(
