@@ -10,7 +10,8 @@ var MonkeyTestSchema = new mongoose.Schema({
   package: String,
   start: Date,
   end: Date,
-  seed: Number
+  seed: Number,
+  calabash_case: String
 });
 
 module.exports = mongoose.model('MonkeyTest', MonkeyTestSchema, 'monkey_tests');

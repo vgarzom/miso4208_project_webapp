@@ -3,6 +3,8 @@ import { MonkeyTestService } from '../../service-clients/monkey-test.service';
 import { MonkeyTest } from '../../../../api/models/monkey-test.model';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
+import { CalabashFeatureModel } from '../../../../api/models/calabash-feature.model';
+import { RedReadCalabashCaseService } from 'src/app/service-clients/redread-calabash-case.service';
 
 @Component({
   selector: 'red-read-app-test-list',
@@ -22,11 +24,13 @@ export class RedReadTestListComponent implements OnInit, OnDestroy {
   requesterName: String = "";
 
   isVisible = false;
+  cases: CalabashFeatureModel[] = [];
   constructor(
     private monkeyTestService: MonkeyTestService,
     private modalService: NzModalService,
     private router: Router,
-    private msg: NzMessageService
+    private msg: NzMessageService,
+    private redReadCalabashCaseService: RedReadCalabashCaseService
   ) { }
 
   showConfirm(tplContent: TemplateRef<{}>): void {
@@ -39,8 +43,13 @@ export class RedReadTestListComponent implements OnInit, OnDestroy {
         if (this.newTest.requester === "") {
           this.msg.error('Debes ingresar tu nombre para continuar.');
           return false;
-        } else if (this.newTest.monkeys === 0) {
-          this.msg.error('Ingres un número de monkeys válido. (monkeys > 0)');
+        }
+        if (this.newTest.type === "monkey" && this.newTest.monkeys === 0) {
+          this.msg.error('Ingresa un número de monkeys válido. (monkeys > 0)');
+          return false;
+        }
+        if (this.newTest.type === "calabash" && (this.newTest.calabash_case === "" || typeof (this.newTest.calabash_case) === 'undefined')) {
+          this.msg.error('Selecciona un caso de pruebas válido');
           return false;
         }
         this.createTest();
@@ -63,6 +72,7 @@ export class RedReadTestListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateTestsList();
+    this.updateCasesList();
   }
 
   getSummaryBackgroundStyle(key: string): any {
@@ -165,12 +175,22 @@ export class RedReadTestListComponent implements OnInit, OnDestroy {
         console.log("error consultando");
       });
   }
+  updateCasesList(): void {
+    this.redReadCalabashCaseService.getAll(
+      res => {
+        this.cases = res;
+        console.log("cases found", this.cases);
+      },
+      err => {
+        console.log("error consultando");
+      });
+  }
 
   goToSelectedTest(id: String): void {
     this.router.navigate(['/monkey/' + id]);
   }
 
-  getTestDuration(test:MonkeyTest):number {
+  getTestDuration(test: MonkeyTest): number {
     let result = Date.parse(test.end) - Date.parse(test.start);
     return result;
   }

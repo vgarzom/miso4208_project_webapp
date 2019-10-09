@@ -7,10 +7,11 @@
   <nz-page-header-subtitle *ngIf="loadingStatus === 'found'">{{getTimeFromLastTest()}}
   </nz-page-header-subtitle>
   <nz-page-header-tags *ngIf="loadingStatus === 'found' && lastTest">
-      <nz-tag [nzColor]="'#f77a13'" *ngIf="lastTest.status === 'in-progress'">En progreso</nz-tag>
-      <nz-tag [nzColor]="'#87d068'" *ngIf="lastTest.status === 'completed' && !lastTest.error">Completada</nz-tag>
-      <nz-tag [nzColor]="'#f9d613'" *ngIf="lastTest.status === 'new'">Nueva</nz-tag>
-      <nz-tag [nzColor]="'#f50'" *ngIf="lastTest.error" nz-tooltip [nzTooltipTitle]="lastTest.error" nzTooltipPlacement="rightBottom">Error</nz-tag>
+    <nz-tag [nzColor]="'#f77a13'" *ngIf="lastTest.status === 'in-progress'">En progreso</nz-tag>
+    <nz-tag [nzColor]="'#87d068'" *ngIf="lastTest.status === 'completed' && !lastTest.error">Completada</nz-tag>
+    <nz-tag [nzColor]="'#f9d613'" *ngIf="lastTest.status === 'new'">Nueva</nz-tag>
+    <nz-tag [nzColor]="'#f50'" *ngIf="lastTest.error" nz-tooltip [nzTooltipTitle]="lastTest.error"
+      nzTooltipPlacement="rightBottom">Error</nz-tag>
   </nz-page-header-tags>
   <nz-page-header-extra>
     <button nz-button nzType="primary" (click)="showConfirm(tplContent)"><i nz-icon nzType="plus"
@@ -76,8 +77,8 @@
           {{getTestDuration(data)}}ms
         </td>
         <td>
-            {{data.seed}}
-          </td>
+          {{data.seed}}
+        </td>
         <td>
           <nz-tag [nzColor]="'#f77a13'" *ngIf="data.status === 'in-progress'">En progreso</nz-tag>
           <nz-tag [nzColor]="'#87d068'" *ngIf="data.status === 'completed' && !data.error">completada</nz-tag>
@@ -114,7 +115,7 @@
     </div>
 
     <div nz-col nzSpan="24" class="gutter-box">
-      <nz-input-group nzAddOnBefore="Tipo" >
+      <nz-input-group nzAddOnBefore="Tipo">
         <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona un tipo de prueba"
           [(ngModel)]="newTest.type">
           <nz-option nzLabel="Monkey test" nzValue="monkey"></nz-option>
@@ -124,10 +125,17 @@
     </div>
 
     <div nz-col nzSpan="24" class="gutter-box" *ngIf="newTest.type === 'monkey'">
-        <nz-input-group nzAddOnBefore="Monkeys" >
-            <input type="number" nz-input [(ngModel)]="newTest.monkeys" nzPlaceHolder="Ingresa el número de monkeys" />
-        </nz-input-group>
-      </div>
+      <nz-input-group nzAddOnBefore="Monkeys">
+        <input type="number" nz-input [(ngModel)]="newTest.monkeys" nzPlaceHolder="Ingresa el número de monkeys" />
+      </nz-input-group>
+    </div>
+
+    <div nz-col nzSpan="24" class="gutter-box" *ngIf="newTest.type === 'calabash'">
+      <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Selecciona un caso de prueba"
+          [(ngModel)]="newTest.calabash_case">
+          <nz-option *ngFor="let c of cases" [nzLabel]="c.name" [nzValue]="c._id"></nz-option>
+        </nz-select>
+    </div>
 
     <div nz-col nzSpan="24" class="gutter-box">
       <nz-input-group nzAddOnBefore="Paquete">

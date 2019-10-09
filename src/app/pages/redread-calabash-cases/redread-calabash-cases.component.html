@@ -1,0 +1,68 @@
+<div class="inner-content">
+  <nz-card [nzBordered]="false"
+    [nzTitle]="loadingStatus === 'uploading' ? 'Creando nuevo caso de prueba...' : 'Crear nuevo caso de prueba'"
+    [nzExtra]="extraTemplate">
+
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <div nz-row nzGutter="16">
+        <div nz-col [nzSm]="24" [nzMd]="12">
+          <nz-upload nzType="drag" [nzMultiple]="false" [nzLimit]="1" (nzChange)="handleChange($event)"
+            [nzBeforeUpload]="beforeUpload" [(nzFileList)]="fileList" [nzFilter]="filters">
+            <p class="ant-upload-drag-icon">
+              <i nz-icon nzType="inbox"></i>
+            </p>
+            <p class="ant-upload-text">Click o arrastra un archivo a esta área para enviarlo</p>
+            <p class="ant-upload-hint">Sólo envía un archivo</p>
+          </nz-upload>
+          <nz-progress *ngIf="uploading" [nzPercent]="uploadPercentage" nzSize="small"></nz-progress>
+        </div>
+        <div nz-col [nzMd]="12" [nzSm]="24">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Por favor ingresa un nombre para el caso!">
+              <nz-input-group nzPrefixIcon="user">
+                <input type="text" nz-input formControlName="name" placeholder="Nombre" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Por favor ingresa una descripción para el caso">
+              <textarea nz-input placeholder="Descripción" formControlName="description"
+                [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item style="text-align: right">
+            <nz-form-control>
+              <button nz-button class="login-form-button" [nzType]="'primary'"
+                [disabled]="fileList.length == 0 || uploading" (click)="submitForm()">Crear Caso</button>
+            </nz-form-control>
+          </nz-form-item>
+
+        </div>
+      </div>
+    </form>
+  </nz-card>
+
+  <nz-table #testsTable [nzData]="cases">
+    <thead>
+      <tr>
+        <th>fecha de creación</th>
+        <th>nombre</th>
+        <th>tamaño</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of testsTable.data" (click)="goToSelectedTest(data._id)">
+
+        <td>
+          {{data.creation_date | date:'medium'}}
+        </td>
+        <td>
+          {{data.name}}
+        </td>
+        <td>
+          {{data.size}}
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

@@ -10,5 +10,6 @@ router.get('/', function (req, res, next) {
 router.use("/cypress-test", require("./cypress-test"));
 router.use("/monkey-test", require("./monkey-test"));
 router.use("/cypress-case", require("./cypress-case"));
+router.use("/calabash-case", require("./calabash-case"));
 
 module.exports = router;
