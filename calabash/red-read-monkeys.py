@@ -53,8 +53,8 @@ def executeCalabashTest(test, client):
     cases = db.calabashfeaturemodels
     tests = db.monkey_tests
     case = cases.find_one({'_id': ObjectId(test['calabash_case'])})
-    # tests.update({'_id': test['_id']}, {
-    #                   '$set': {'status': 'in-progress', 'start': datetime.datetime.now()}})
+    tests.update({'_id': test['_id']}, {
+        '$set': {'status': 'in-progress', 'start': datetime.datetime.now()}})
     # removes previous tests
     command = ['cp', calabash_features_dir +
                case['file_name'], calabash_test_dir+'features']
@@ -66,22 +66,38 @@ def executeCalabashTest(test, client):
     output, err = p.communicate(
         b"input data that is passed to subprocess' stdin")
     os.remove(calabash_test_dir+'features/'+case['file_name'])
+    print(output)
 
+    esc_failed = False
     scenario_str = re.findall(
-        r'[0-9]+ scenario \([0-9]+ passed\)', output)[0].split(" ")
-    scenario = scenario_str[0]
-    scenario_passed = scenario_str[2].replace("(", "")
+        r'[0-9]+ scenarios \([0-9]+ passed', output)
+    if len(scenario_str) == 0:
+        scenario_str = re.findall(r'[0-9]+ scenarios \([0-9]+ failed', output)
+        esc_failed = True
 
+    scenario_array = scenario_str[0].split(" ")
+    scenario = int(scenario_array[0])
+    scenario_passed = int(scenario_array[2].replace("(", ""))
+    if esc_failed:
+        scenario_passed = scenario - scenario_passed
+
+    steps_failed = False
     steps_str = re.findall(
-        r'[0-9]+ steps \([0-9]+ passed\)', output)[0].split(" ")
-    steps = steps_str[0]
-    steps_passed = steps_str[2].replace("(", "")
+        r'[0-9]+ steps \([0-9]+ passed', output)
+    if len(steps_str) == 0:
+        steps_str = re.findall(r'[0-9]+ steps \([0-9]+ failed', output)
+        steps_failed = True
 
+    steps_array = steps_str[0].split(" ")
+    print(steps_array)
+    steps = int(steps_array[0])
+    steps_passed = int(steps_array[2].replace("(", ""))
+    if steps_failed:
+        steps_passed = steps - steps_passed
 
     tests.update({'_id': test['_id']}, {
         '$set': {'status': 'completed', 'end': datetime.datetime.now(), 'calabash_result': {'log': output, 'scenarios': scenario, 'passed_scenarios': scenario_passed, 'steps': steps, 'passed_steps': steps_passed}}})
     client.close()
-    # print(output)
 
 
 def lookForTest():
@@ -104,7 +120,7 @@ def main():
             print 'test completed with result ' + str(result)
         else:
             print "nothing... waiting"
-            time.sleep(30)
+            time.sleep(5)
 
 
 main()
