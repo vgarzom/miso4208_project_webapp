@@ -1,0 +1,33 @@
+<nz-layout class="layout">
+  <nz-layout>
+    <nz-content>
+
+      <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle" class="content-row home-background">
+        <div nz-col nzSpan="12">
+          <img src="assets/img/home_img.svg" [ngStyle]="{ width: '100%' }" class="astronaut" />
+        </div>
+        <div nz-col nzSpan="12" style="text-align: center;">
+
+          <span nz-title class="title-text">Preocúpate por diseñar<br />apps increibles</span>
+          <p>Nosotros velaremos porque esté lista para llegar hasta donde lo soñaste</p>
+
+          <br />
+          <div class="col-center-content">
+
+            <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate" [ngStyle]="{ 'width': '300px' }">
+              <app-login></app-login>
+            </nz-card>
+            <ng-template #coverTemplate>
+              <div style="padding: 10px">
+                <img src="assets/img/logo.svg" [ngStyle]="{ width: '150px' }" />
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </nz-content>
+  </nz-layout>
+  <nz-footer>
+    <nz-footer>Koko Testing ©2019 Implement By Angular, Powered by Ant Design</nz-footer>
+  </nz-footer>
+</nz-layout>

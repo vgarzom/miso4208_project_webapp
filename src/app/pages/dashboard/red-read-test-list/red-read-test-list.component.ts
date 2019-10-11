@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
-import { MonkeyTestService } from '../../service-clients/monkey-test.service';
-import { MonkeyTest } from '../../../../api/models/monkey-test.model';
+import { MonkeyTestService } from '../../../service-clients/monkey-test.service';
+import { MonkeyTest } from '../../../../../api/models/monkey-test.model';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
-import { CalabashFeatureModel } from '../../../../api/models/calabash-feature.model';
+import { CalabashFeatureModel } from '../../../../../api/models/calabash-feature.model';
 import { RedReadCalabashCaseService } from 'src/app/service-clients/redread-calabash-case.service';
 
 @Component({
