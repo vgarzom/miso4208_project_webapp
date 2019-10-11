@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CypressTestService } from 'src/app/service-clients/cypress-test.service';
-import { CypressTest } from '../../../../api/models/cypress-test.model';
+import { CypressTest } from '../../../../../api/models/cypress-test.model';
 
 @Component({
   selector: 'app-todoistest',

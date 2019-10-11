@@ -5,7 +5,6 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { RedReadTestListComponent } from './red-read-test-list/red-read-test-list.component';
-
 @NgModule({
   declarations: [
     DashboardComponent,

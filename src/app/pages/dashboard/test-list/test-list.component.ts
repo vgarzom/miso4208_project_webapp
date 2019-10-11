@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { CypressTestService } from 'src/app/service-clients/cypress-test.service';
-import { CypressTest } from '../../../../api/models/cypress-test.model';
-import { CypressSpecModel } from '../../../../api/models/cypress-spec.model';
+import { CypressTest } from '../../../../../api/models/cypress-test.model';
+import { CypressSpecModel } from '../../../../../api/models/cypress-spec.model';
 import { OnTestCreatedService } from 'src/app/service-clients/ont-test-created.service';
 import { Subscription } from 'rxjs';
 import { NzModalService, NzNotificationService, NzMessageService } from 'ng-zorro-antd';

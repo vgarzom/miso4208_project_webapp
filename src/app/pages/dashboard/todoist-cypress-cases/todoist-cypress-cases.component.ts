@@ -4,7 +4,7 @@ import { UploadFile, NzMessageService, UploadFilter } from 'ng-zorro-antd';
 import { HttpRequest, HttpClient, HttpHeaders, HttpEventType, HttpHeaderResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, Observer } from 'rxjs';
-import { CypressSpecModel } from '../../../../api/models/cypress-spec.model';
+import { CypressSpecModel } from '../../../../../api/models/cypress-spec.model';
 import { TodoistCypressCaseService } from 'src/app/service-clients/todoist-cypress-case.service';
 
 @Component({

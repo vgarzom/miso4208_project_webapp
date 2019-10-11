@@ -2,9 +2,8 @@
   <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null">
     <div class="sidebar-logo">
-      <a href="https://ng.ant.design/" target="_blank">
-        <h1>Visual Regression Tests</h1>
-      </a>
+      <img src="assets/img/koko.svg" alt="logo">
+      <h1>Koko Testing</h1>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu nzOpen nzTitle="Aplicaciones" nzIcon="dashboard">
@@ -31,7 +30,23 @@
   </nz-sider>
   <nz-layout>
     <nz-page-header [nzBackIcon]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (nzBack)="isCollapsed = !isCollapsed">
-      <nz-page-header-title >{{title}}</nz-page-header-title>
+      <nz-page-header-title>
+
+      </nz-page-header-title>
+      <nz-page-header-extra>
+        <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          <nz-avatar [nzText]="user.email" [nzSrc]="gravatarUrl"></nz-avatar>
+        </a>
+
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>Perfil</li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item (click)="logOut()">Cerrar sesión</li>
+
+          </ul>
+        </nz-dropdown-menu>
+      </nz-page-header-extra>
     </nz-page-header>
     <nz-content>
       <router-outlet></router-outlet>

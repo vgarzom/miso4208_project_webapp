@@ -1,0 +1,34 @@
+<span nz-text nzType="secondary">Registro</span>
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+  
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Por favor ingresa tu correo electrónico!">
+      <nz-input-group nzPrefixIcon="mail">
+        <input type="text" nz-input formControlName="email" placeholder="Correo" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Por favor ingresa tu contraseña!">
+      <nz-input-group nzPrefixIcon="lock">
+        <input type="password" nz-input formControlName="password" placeholder="Contraseña" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+      <nz-form-control nzErrorTip="Por favor repite tu contraseña">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="repassword" placeholder="Repetir Contraseña" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <!--<label nz-checkbox formControlName="remember">
+            <span>Remember me</span>
+          </label>
+          <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>-->
+      <button nz-button class="login-form-button" [nzType]="'primary'">Iniciar sesión</button>
+      <button nz-button nzType="link" (click)="goToLogin()">Ya tengo una cuenta</button>
+    </nz-form-control>
+  </nz-form-item>

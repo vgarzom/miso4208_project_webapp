@@ -9,16 +9,17 @@
         <div nz-col nzSpan="12" style="text-align: center;">
 
           <span nz-title class="title-text">Preocúpate por diseñar<br />apps increibles</span>
-          <p>Nosotros velaremos porque esté lista para llegar hasta donde lo soñaste</p>
+          <p>Nosotros velaremos porque estén listas para llegar hasta donde lo soñaste</p>
 
           <br />
           <div class="col-center-content">
 
-            <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate" [ngStyle]="{ 'width': '300px' }">
-              <app-login></app-login>
+            <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate" [ngStyle]="{ 'width': '350px' }">
+              <app-login *ngIf="isLogin" (onRegisterSelected)="isLogin = false"></app-login>
+              <app-register *ngIf="!isLogin" (onLoginSelected)="isLogin = true"></app-register>
             </nz-card>
             <ng-template #coverTemplate>
-              <div style="padding: 10px">
+              <div style="padding: 20px">
                 <img src="assets/img/logo.svg" [ngStyle]="{ width: '150px' }" />
               </div>
             </ng-template>

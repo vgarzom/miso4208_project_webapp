@@ -4,7 +4,7 @@ import { UploadFile, NzMessageService, UploadFilter } from 'ng-zorro-antd';
 import { HttpRequest, HttpClient, HttpHeaders, HttpEventType, HttpHeaderResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, Observer } from 'rxjs';
-import { CalabashFeatureModel } from '../../../../api/models/calabash-feature.model';
+import { CalabashFeatureModel } from '../../../../../api/models/calabash-feature.model';
 import { RedReadCalabashCaseService } from 'src/app/service-clients/redread-calabash-case.service';
 
 @Component({
