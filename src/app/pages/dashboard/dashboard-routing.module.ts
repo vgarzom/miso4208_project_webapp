@@ -10,7 +10,8 @@ const routes: Routes = [
     data: { title: 'dashboard' },
     children: [
       { path: '', redirectTo: 'redread-tests' },
-      { path: 'redread-tests', component: RedReadTestListComponent, data: { title: "redread" } }
+      { path: 'redread-tests', component: RedReadTestListComponent, data: { title: "redread" } },
+      { path: 'apps', loadChildren: () => import('./applications/applications.module').then(m => m.ApplicationsModule) }
     ]
   }
 ];

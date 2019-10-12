@@ -1,0 +1,81 @@
+<div class="inner-content">
+  <nz-table #appsTable [nzData]="applications" nzBordered [nzTitle]="coverTemplate">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Sistema operativo</th>
+        <th>URL</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let app of appsTable.data" (click)="onApplicationSelected(app)">
+        <td>{{app.name}}</td>
+        <td>{{app.type}}</td>
+        <td>{{app.so}}</td>
+        <td>{{app.url}}</td>
+        <td>
+          <nz-tag [nzColor]="'orange'" *ngIf="app.status === 'in_progress'">En progreso</nz-tag>
+          <nz-tag [nzColor]="'red'" *ngIf="app.status === 'error'">Error al procesar</nz-tag>
+          <nz-tag [nzColor]="'green'" *ngIf="app.status === 'ready_for_testing'">Lista para pruebas</nz-tag>
+
+        </td>
+
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<ng-template #coverTemplate>
+  <nz-page-header>
+    <nz-page-header-title>Aplicaciones</nz-page-header-title>
+    <nz-page-header-subtitle>Disponibles para pruebas</nz-page-header-subtitle>
+    <nz-page-header-extra>
+      <button nz-button nzType="primary" (click)="createNewApp()">Nueva App</button>
+    </nz-page-header-extra>
+  </nz-page-header>
+</ng-template>
+
+<!--
+<div class="container-fluid">
+  <div class="col-lg-12" *ngIf="!isLoading && applications.length > 0">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-align-justify"></i> Aplicaciones registradas
+        <div class="card-header-actions" style="height: 21px;">
+            <button type="button" class="btn btn-sm btn-pill btn-primary" (click)="createNewApp()">Crear nueva app</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Sistema operativo</th>
+              <th>URL</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let app of applications" (click)="onApplicationSelected(app)">
+              <td>{{app.name}}</td>
+              <td>{{app.type}}</td>
+              <td>{{app.so}}</td>
+              <td>{{app.url}}</td>
+              <td>
+                <span class="badge badge-warning" *ngIf="app.status === 'in_progress'">En progreso</span>
+                <span class="badge badge-success" *ngIf="app.status === 'ready_for_testing'">Lista para pruebas</span>
+                <span class="badge badge-danger" *ngIf="app.status === 'error'">Error al procesar</span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+-->
