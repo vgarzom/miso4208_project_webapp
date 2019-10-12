@@ -14,25 +14,16 @@
 
   </nz-descriptions>
 
-  <nz-divider nzText="Compilaciones" nzOrientation="left"></nz-divider>
+  <nz-divider></nz-divider>
   <div nz-row nzGutter="16" *ngIf="currentApp">
     <div nz-col nzSpan="12">
       <app-compilations-list [application]="currentApp"></app-compilations-list>
     </div>
     <div nz-col nzSpan="12">
-      <app-upload-compilation [application]="currentApp" (onCompilationCreated)="getCompilations()">
-      </app-upload-compilation>
+        <app-testcases-list [application]="currentApp"></app-testcases-list>
     </div>
   </div>
 
   <nz-divider nzText="Casos de prueba" nzOrientation="left"></nz-divider>
-  <div nz-row nzGutter="16" *ngIf="currentApp">
-    <div nz-col nzSpan="12">
-      <app-testcases-list [application]="currentApp"></app-testcases-list>
-    </div>
-    <div nz-col nzSpan="12">
-      <app-upload-test-case [application]="currentApp" (onCompilationCreated)="getCompilations()">
-      </app-upload-test-case>
-    </div>
-  </div>
+  
 </div>

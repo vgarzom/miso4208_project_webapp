@@ -16,6 +16,7 @@ export class TestcasesListComponent implements OnInit {
   private _application: ApplicationModel;
   selected_file: String = "";
   visible: boolean = false;
+  newtest_visible: boolean = false;
   @Input()
   set application(value: ApplicationModel) {
     this._application = value;

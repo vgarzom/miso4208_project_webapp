@@ -1,4 +1,4 @@
-<nz-table #compilationsTable [nzData]="compilations" nzSize="small" nzBordered [nzTitle]="coverTemplate">
+<nz-table #compilationsTable [nzData]="compilations" nzSize="small" nzBordered [nzTitle]="headerTemplate">
   <thead>
     <tr>
       <th>Versión</th>
@@ -8,10 +8,30 @@
   </thead>
   <tbody>
     <tr *ngFor="let c of compilationsTable.data">
-      <td><nz-tag [nzColor]="'#108ee9'">{{c.version}}</nz-tag></td>
+      <td>
+        <nz-tag [nzColor]="'#108ee9'">{{c.version}}</nz-tag>
+      </td>
       <td *ngIf="application.type === 'mobile'">{{c.size | filesize}}</td>
       <td *ngIf="application.type === 'web'">{{c.url}}</td>
       <td>{{c.created_date | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
     </tr>
   </tbody>
 </nz-table>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true" [nzWidth]="360" [nzVisible]="visible" nzTitle="Nueva compilación"
+  (nzOnClose)="visible = false">
+  <app-upload-compilation [application]="application" (onCompilationCreated)="getCompilations()">
+  </app-upload-compilation>
+</nz-drawer>
+
+<ng-template #headerTemplate>
+  <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+    <div nz-col nzSpan="12">
+      <span>Compilaciones</span>
+    </div>
+    <div nz-col nzSpan="12" style="text-align: right;">
+      <button nz-button nzType="link" (click)="visible = true">Nueva compilación</button>
+    </div>
+  </div>
+</ng-template>

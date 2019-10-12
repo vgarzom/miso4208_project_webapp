@@ -1,4 +1,4 @@
-<nz-table #testCasesListTable [nzData]="cases" nzSize="small" nzBordered [nzTitle]="coverTemplate">
+<nz-table #testCasesListTable [nzData]="cases" nzSize="small" nzBordered [nzTitle]="headerTemplate">
   <thead>
     <tr>
       <th>Nombre</th>
@@ -17,13 +17,26 @@
   </tbody>
 </nz-table>
 
-<nz-drawer
-      [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
-      [nzMaskClosable]="true"
-      [nzWidth]="720"
-      [nzVisible]="visible"
-      nzTitle="Contenido del archivo"
-      (nzOnClose)="visible = false"
-    >
-    <ckeditor [editor]="Editor" [(ngModel)]="selected_file.data" [config]="{ toolbar: [] }" disabled="true"></ckeditor>
-  </nz-drawer>
+<ng-template #headerTemplate>
+  <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+    <div nz-col nzSpan="12">
+      <span>Casos de prueba</span>
+    </div>
+    <div nz-col nzSpan="12" style="text-align: right;">
+      <button nz-button nzType="link" (click)="newtest_visible = true">Crear caso de prueba</button>
+    </div>
+  </div>
+</ng-template>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true" [nzWidth]="360" [nzVisible]="newtest_visible" nzTitle="Nuevo caso de prueba"
+  (nzOnClose)="newtest_visible = false">
+  <app-upload-test-case [application]="application" (onCompilationCreated)="getCases()">
+  </app-upload-test-case>
+</nz-drawer>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true" [nzWidth]="720" [nzVisible]="visible" nzTitle="Contenido del archivo"
+  (nzOnClose)="visible = false">
+  <ckeditor [editor]="Editor" [(ngModel)]="selected_file.data" [config]="{ toolbar: [] }" disabled="true"></ckeditor>
+</nz-drawer>
