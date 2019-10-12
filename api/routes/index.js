@@ -15,6 +15,7 @@ router.use("/user", require("./user"));
 router.use("/applications", require("./applications"));
 router.use("/upload-package", require("./upload-package"));
 router.use("/app-compilation", require("./app-compilation"));
+router.use("/test-case", require("./test-case"));
 
 
 module.exports = router;

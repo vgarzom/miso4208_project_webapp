@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use("/testcases", express.static(path.join(__dirname, 'testcases')));
 app.use("/public", express.static('public'));
 
 //Loading api routes

@@ -32,25 +32,27 @@
     </ul>
   </nz-sider>
   <nz-layout>
-    <nz-page-header [nzBackIcon]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (nzBack)="isCollapsed = !isCollapsed">
-      <nz-page-header-title>
+    <nz-affix>
+      <nz-page-header [nzBackIcon]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (nzBack)="isCollapsed = !isCollapsed">
+        <nz-page-header-title>
 
-      </nz-page-header-title>
-      <nz-page-header-extra>
-        <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-          <nz-avatar [nzText]="user.email" [nzSrc]="gravatarUrl"></nz-avatar>
-        </a>
+        </nz-page-header-title>
+        <nz-page-header-extra>
+          <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+            <nz-avatar [nzText]="user.email" [nzSrc]="gravatarUrl"></nz-avatar>
+          </a>
 
-        <nz-dropdown-menu #menu="nzDropdownMenu">
-          <ul nz-menu nzSelectable>
-            <li nz-menu-item>Perfil</li>
-            <li nz-menu-divider></li>
-            <li nz-menu-item (click)="logOut()">Cerrar sesión</li>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item>Perfil</li>
+              <li nz-menu-divider></li>
+              <li nz-menu-item (click)="logOut()">Cerrar sesión</li>
 
-          </ul>
-        </nz-dropdown-menu>
-      </nz-page-header-extra>
-    </nz-page-header>
+            </ul>
+          </nz-dropdown-menu>
+        </nz-page-header-extra>
+      </nz-page-header>
+    </nz-affix>
     <nz-content>
       <router-outlet></router-outlet>
     </nz-content>

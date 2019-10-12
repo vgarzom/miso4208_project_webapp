@@ -1,0 +1,29 @@
+<nz-table #testCasesListTable [nzData]="cases" nzSize="small" nzBordered [nzTitle]="coverTemplate">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo</th>
+      <th>Fecha de creación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of testCasesListTable.data" (click)="selectFile(c)">
+      <td>
+        {{c.name}}
+      </td>
+      <td>{{c.type}}</td>
+      <td>{{c.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-drawer
+      [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+      [nzMaskClosable]="true"
+      [nzWidth]="720"
+      [nzVisible]="visible"
+      nzTitle="Contenido del archivo"
+      (nzOnClose)="visible = false"
+    >
+    <p>{{selected_file.data}}</p>
+  </nz-drawer>

@@ -17,6 +17,9 @@ import { AppCompilationService } from 'src/app/service-clients/app-compilation.s
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { EditApplicationComponent } from './edit-application/edit-application.component';
 import { UploadCompilationComponent } from './upload-compilation/upload-compilation.component';
+import { CompilationsListComponent } from './compilations-list/compilations-list.component';
+import { TestcasesListComponent } from './testcases-list/testcases-list.component';
+import { UploadTestCaseComponent } from './upload-test-case/upload-test-case.component';
 
 
 @NgModule({
@@ -34,7 +37,10 @@ import { UploadCompilationComponent } from './upload-compilation/upload-compilat
     AppListComponent, 
     NewApplicationComponent,
     EditApplicationComponent,
-    UploadCompilationComponent
+    UploadCompilationComponent,
+    CompilationsListComponent,
+    TestcasesListComponent,
+    UploadTestCaseComponent
   ],
   providers: [
     CurrentUserService,

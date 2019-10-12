@@ -1,0 +1,52 @@
+<span>Nueva caso de pruebas</span>
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()" *ngIf="application">
+  <div nz-row >
+    <div nz-col nzSpan="24">
+      <nz-upload nzType="drag" [nzMultiple]="false" [nzLimit]="1" (nzChange)="handleChange($event)"
+        [nzBeforeUpload]="beforeUpload" [(nzFileList)]="fileList" [nzFilter]="filters">
+        <p class="ant-upload-drag-icon">
+          <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">Click o arrastra un script a esta área para enviarlo</p>
+        <p class="ant-upload-hint">Sólo envía un archivo</p>
+      </nz-upload>
+      <nz-progress *ngIf="uploading" [nzPercent]="uploadPercentage" nzSize="small"></nz-progress>
+    </div>
+  </div>
+  <div nz-row *ngIf="application">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Por favor ingresa un nombre para la versión">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="name" placeholder="nombre" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+          <nz-form-control [nzSm]="14" [nzXs]="24"
+            nzErrorTip="Selecciona un tipo de caso válido!">
+            <nz-select formControlName="type" nzAllowClear nzPlaceHolder="Selecciona">
+              <nz-option nzValue="cypress" nzLabel="Cypress"></nz-option>
+              <nz-option nzValue="calabash" nzLabel="Calabash"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Por favor ingresa una descripción">
+          <textarea formControlName="description" nz-input rows="2"
+            placeholder="Unas palabras para describir esta versión"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item style="text-align: right">
+        <nz-form-control>
+          <button nz-button [nzType]="'primary'"
+            [disabled]="fileList.length == 0 || uploading">Enviar</button>
+        </nz-form-control>
+      </nz-form-item>
+
+    </div>
+  </div>
+</form>
