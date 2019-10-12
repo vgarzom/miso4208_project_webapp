@@ -4,6 +4,7 @@ var AppCompilationSchema = new mongoose.Schema({
   app_id: String,
   file_name: String,
   size: Number,
+  url: String,
   version: String,
   description: String,
   updated_date: { type: Date, default: Date.now },

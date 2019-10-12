@@ -1,5 +1,6 @@
+<span>Nueva versión/compilación</span>
 <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-  <div nz-row>
+  <div nz-row *ngIf="application && application.type === 'mobile'">
     <div nz-col nzSpan="24">
       <nz-upload nzType="drag" [nzMultiple]="false" [nzLimit]="1" (nzChange)="handleChange($event)"
         [nzBeforeUpload]="beforeUpload" [(nzFileList)]="fileList" [nzFilter]="filters">
@@ -12,12 +13,20 @@
       <nz-progress *ngIf="uploading" [nzPercent]="uploadPercentage" nzSize="small"></nz-progress>
     </div>
   </div>
-  <div nz-row>
+  <div nz-row *ngIf="application">
     <div nz-col nzSpan="24">
       <nz-form-item>
-        <nz-form-control nzErrorTip="Por favor ingresa una versión para el caso">
+        <nz-form-control nzErrorTip="Por favor ingresa un nombre para la versión">
           <nz-input-group nzPrefixIcon="user">
             <input type="text" nz-input formControlName="version" placeholder="Versión" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Por favor ingresa una url para la versión">
+          <nz-input-group nzPrefixIcon="desktop">
+            <input type="text" nz-input formControlName="url" placeholder="url" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -32,7 +41,7 @@
       <nz-form-item style="text-align: right">
         <nz-form-control>
           <button nz-button [nzType]="'primary'"
-            [disabled]="fileList.length == 0 || uploading" (click)="submitForm()">Enviar compilación</button>
+            [disabled]="(application.type === 'mobile' && fileList.length == 0) || uploading">Enviar</button>
         </nz-form-control>
       </nz-form-item>
 

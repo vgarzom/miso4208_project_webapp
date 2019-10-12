@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, AfterContentInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, AfterContentInit, Output, EventEmitter, ApplicationModule } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UploadFile, NzMessageService, UploadFilter } from 'ng-zorro-antd';
 import { HttpClient, HttpHeaders, HttpRequest, HttpEventType, HttpHeaderResponse } from '@angular/common/http';
 import { Observable, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApplicationModel, User } from '../../../../../../api/models';
+import { AppCompilationService } from 'src/app/service-clients/app-compilation.service';
 
 @Component({
   selector: 'app-upload-compilation',
@@ -12,13 +13,31 @@ import { ApplicationModel, User } from '../../../../../../api/models';
   styleUrls: ['./upload-compilation.component.scss']
 })
 export class UploadCompilationComponent implements OnInit, AfterContentInit {
-  @Input() application: ApplicationModel;
   @Output() onCompilationCreated: EventEmitter<void> = new EventEmitter();
   loadingStatus: string = "new-compilation";
   validateForm: FormGroup;
   fileList: UploadFile[] = [];
   uploading: boolean = false;
   uploadPercentage: number = 0;
+
+  private _application: ApplicationModel;
+  @Input()
+  set application(value: ApplicationModel) {
+    this._application = value;
+    if (this._application.type === 'web') {
+      this.validateForm = this.fb.group({
+        version: [null, [Validators.required]],
+        description: [null, [Validators.required]],
+        url: [null, [Validators.required]]
+      });
+    }
+  }
+
+  get application(): ApplicationModel {
+    return this._application;
+  }
+
+
 
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = [];
@@ -29,6 +48,7 @@ export class UploadCompilationComponent implements OnInit, AfterContentInit {
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
+    private appCompilationService: AppCompilationService,
     private msg: NzMessageService
   ) {
 
@@ -37,9 +57,9 @@ export class UploadCompilationComponent implements OnInit, AfterContentInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       version: [null, [Validators.required]],
-      description: [null, [Validators.required]]
-    });
-
+      description: [null, [Validators.required]],
+      url: [null, []]
+    })
   }
 
   ngAfterContentInit() {
@@ -50,8 +70,26 @@ export class UploadCompilationComponent implements OnInit, AfterContentInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    if (this.validateForm.valid) {
+    if (!this.validateForm.valid) {
+      return;
+    }
+
+    if (this.application.type === 'mobile') {
       this.handleUpload();
+    } else {
+      this.appCompilationService.create({
+        version: this.validateForm.controls['version'].value,
+        description: this.validateForm.controls['description'].value,
+        app_id: this.application._id,
+        url: this.validateForm.get('url').value
+      }, (result) => {
+        if (result) {
+          this.msg.success('Compilación creada satisfactoriamente');
+          this.onCompilationCreated.emit();
+        } else {
+          this.msg.error('Ocurrió un error al crear la compilación.');
+        }
+      });
     }
   }
 
@@ -126,6 +164,7 @@ export class UploadCompilationComponent implements OnInit, AfterContentInit {
                 description: [null, [Validators.required]]
               });
               this.msg.success('Compilación creada satisfactoriamente');
+              this.validateForm.clearValidators();
               this.onCompilationCreated.emit();
             } else {
               this.uploading = false;

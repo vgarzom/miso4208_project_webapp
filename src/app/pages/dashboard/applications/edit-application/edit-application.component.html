@@ -17,18 +17,19 @@
   <nz-divider nzText="Compilaciones" nzOrientation="left"></nz-divider>
   <div nz-row nzGutter="16">
     <div nz-col nzSpan="12">
-      <nz-table #compilationsTable [nzData]="compilations" nzBordered [nzTitle]="coverTemplate">
+      <nz-table #compilationsTable [nzData]="compilations" nzSize="small" nzBordered [nzTitle]="coverTemplate">
         <thead>
           <tr>
             <th>Versión</th>
-            <th>Peso</th>
+            <th>{{currentApp.type === 'web' ? 'url' : 'Peso'}}</th>
             <th>Fecha de creación</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let c of compilationsTable.data">
             <td><nz-tag [nzColor]="'#108ee9'">{{c.version}}</nz-tag></td>
-            <td>{{c.size | filesize}}</td>
+            <td *ngIf="currentApp.type === 'mobile'">{{c.size | filesize}}</td>
+            <td *ngIf="currentApp.type === 'web'">{{c.url}}</td>
             <td>{{c.created_date | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
           </tr>
         </tbody>
