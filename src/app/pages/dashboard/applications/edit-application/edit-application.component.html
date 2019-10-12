@@ -20,10 +20,15 @@
       <app-compilations-list [application]="currentApp"></app-compilations-list>
     </div>
     <div nz-col nzSpan="12">
-        <app-testcases-list [application]="currentApp"></app-testcases-list>
+      <app-testcases-list [application]="currentApp"></app-testcases-list>
     </div>
   </div>
 
   <nz-divider nzText="Casos de prueba" nzOrientation="left"></nz-divider>
-  
+
+  <div nz-row nzGutter="16" *ngIf="currentApp">
+    <div nz-col nzSpan="24">
+      <app-tests-list [application]="currentApp"></app-tests-list>
+    </div>
+  </div>
 </div>

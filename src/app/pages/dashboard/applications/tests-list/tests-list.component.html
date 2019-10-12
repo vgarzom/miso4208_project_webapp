@@ -1,0 +1,43 @@
+<nz-table #testsTable [nzData]="tests" nzSize="small" nzBordered [nzTitle]="headerTemplate">
+  <thead>
+    <tr>
+      <th>Caso</th>
+      <th>Versión app</th>
+      <th>Solicitó</th>
+      <th>Fecha de creación</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of testsTable.data">
+      <td>
+        {{c.case_id}}
+      </td>
+      <td>
+        {{c.app_compilation_id}}
+      </td>
+      <td>{{c.user_id}}</td>
+      <td>{{c.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
+      <td>
+        {{c.status}}
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<ng-template #headerTemplate>
+  <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+    <div nz-col nzSpan="12">
+      <span>Pruebas solicitadas</span>
+    </div>
+    <div nz-col nzSpan="12" style="text-align: right;">
+      <button nz-button nzType="link" (click)="visible = true">Nueva solicitud</button>
+    </div>
+  </div>
+</ng-template>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true" [nzWidth]="360" [nzVisible]="visible" nzTitle="Nueva solicitud de pruebas"
+  (nzOnClose)="visible = false">
+
+</nz-drawer>
