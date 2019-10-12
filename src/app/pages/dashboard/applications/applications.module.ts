@@ -15,6 +15,8 @@ import { CurrentUserService } from 'src/app/service-clients/current-user.service
 import { ApplicationsService } from 'src/app/service-clients/applications.service';
 import { AppCompilationService } from 'src/app/service-clients/app-compilation.service';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { EditApplicationComponent } from './edit-application/edit-application.component';
+import { UploadCompilationComponent } from './upload-compilation/upload-compilation.component';
 
 
 @NgModule({
@@ -30,9 +32,9 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
   declarations: [
     ApplicationsComponent, 
     AppListComponent, 
-    NewApplicationComponent/*, 
-    NoAppsFoundComponent, 
-    EditApplicationComponent*/
+    NewApplicationComponent,
+    EditApplicationComponent,
+    UploadCompilationComponent
   ],
   providers: [
     CurrentUserService,

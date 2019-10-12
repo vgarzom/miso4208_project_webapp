@@ -50,7 +50,7 @@ export class AppListComponent implements OnInit {
 
   onApplicationSelected(app: ApplicationModel): void {
     console.log("Application selected", app);
-    this.router.navigate([`applications/app/${app._id}`]);
+    this.router.navigate([`dashboard/apps/appid/${app._id}`]);
   }
 
 }

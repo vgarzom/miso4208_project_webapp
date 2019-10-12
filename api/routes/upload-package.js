@@ -13,7 +13,7 @@ var storage = multer.diskStorage(
   }
 );
 
-var upload = multer({ storage: storage }).single('file');
+var upload = multer({ storage: storage }).array('file', 1);
 
 router.get('/', function (req, res, next) {
   // render the index page, and pass data to it.

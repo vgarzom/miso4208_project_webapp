@@ -5,6 +5,7 @@ var AppCompilationSchema = new mongoose.Schema({
   file_name: String,
   size: Number,
   version: String,
+  description: String,
   updated_date: { type: Date, default: Date.now },
   created_date: { type: Date, default: Date.now }
 });
