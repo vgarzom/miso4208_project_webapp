@@ -21,6 +21,7 @@ import { CompilationsListComponent } from './compilations-list/compilations-list
 import { TestcasesListComponent } from './testcases-list/testcases-list.component';
 import { UploadTestCaseComponent } from './upload-test-case/upload-test-case.component';
 
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { UploadTestCaseComponent } from './upload-test-case/upload-test-case.com
     ApplicationsRoutingModule,
     FileUploadModule,
     NgxFilesizeModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    CKEditorModule
   ],
   declarations: [
     ApplicationsComponent, 

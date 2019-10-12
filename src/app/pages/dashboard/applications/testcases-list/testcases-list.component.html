@@ -25,5 +25,5 @@
       nzTitle="Contenido del archivo"
       (nzOnClose)="visible = false"
     >
-    <p>{{selected_file.data}}</p>
+    <ckeditor [editor]="Editor" [(ngModel)]="selected_file.data" [config]="{ toolbar: [] }" disabled="true"></ckeditor>
   </nz-drawer>

@@ -4,6 +4,7 @@ import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { ApplicationModel, TestCaseModel } from '../../../../../../api/models';
 import { ApplicationsService } from 'src/app/service-clients/applications.service';
 import { TestCaseService } from 'src/app/service-clients/test-case.service';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-testcases-list',
@@ -11,6 +12,7 @@ import { TestCaseService } from 'src/app/service-clients/test-case.service';
   styleUrls: ['./testcases-list.component.scss']
 })
 export class TestcasesListComponent implements OnInit {
+  public Editor = ClassicEditor;
   private _application: ApplicationModel;
   selected_file: String = "";
   visible: boolean = false;
