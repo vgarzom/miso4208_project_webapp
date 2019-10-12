@@ -15,7 +15,7 @@
   </nz-descriptions>
 
   <nz-divider nzText="Compilaciones" nzOrientation="left"></nz-divider>
-  <div nz-row nzGutter="16">
+  <div nz-row nzGutter="16" *ngIf="currentApp">
     <div nz-col nzSpan="12">
       <nz-table #compilationsTable [nzData]="compilations" nzSize="small" nzBordered [nzTitle]="coverTemplate">
         <thead>

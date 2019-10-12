@@ -49,3 +49,4 @@ Thumbs.db
 /cypress/screenshots/**/*
 dist.zip
 /cypress/integration/*
+/uploads/

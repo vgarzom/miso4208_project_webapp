@@ -1,6 +1,6 @@
 <span>Nueva versión/compilación</span>
-<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-  <div nz-row *ngIf="application && application.type === 'mobile'">
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()" *ngIf="application">
+  <div nz-row *ngIf="application.type === 'mobile'">
     <div nz-col nzSpan="24">
       <nz-upload nzType="drag" [nzMultiple]="false" [nzLimit]="1" (nzChange)="handleChange($event)"
         [nzBeforeUpload]="beforeUpload" [(nzFileList)]="fileList" [nzFilter]="filters">
@@ -23,7 +23,7 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item>
+      <nz-form-item *ngIf="application.type === 'web'">
         <nz-form-control nzErrorTip="Por favor ingresa una url para la versión">
           <nz-input-group nzPrefixIcon="desktop">
             <input type="text" nz-input formControlName="url" placeholder="url" />
