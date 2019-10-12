@@ -12,7 +12,7 @@ export class TestsListComponent implements OnInit {
   @Input()
   set application(value: ApplicationModel) {
     this._application = value;
-    this.getCompilations();
+    this.getTests();
   }
 
   get application(): ApplicationModel {
@@ -28,7 +28,7 @@ export class TestsListComponent implements OnInit {
   ngOnInit() {
   }
 
-  getCompilations() {
+  getTests() {
     this.testObjectService.getByAppID(this.application._id, (result) => {
       this.tests = result;
     }, (err) => {

@@ -39,5 +39,5 @@
 <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
   [nzMaskClosable]="true" [nzWidth]="360" [nzVisible]="visible" nzTitle="Nueva solicitud de pruebas"
   (nzOnClose)="visible = false">
-
+  <app-test-resquester [application]="application" (onRequestCreated)="getTests()"></app-test-resquester>
 </nz-drawer>

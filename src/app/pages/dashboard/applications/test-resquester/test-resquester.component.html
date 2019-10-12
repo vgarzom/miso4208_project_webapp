@@ -1,0 +1,32 @@
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()" *ngIf="application">
+  <div nz-row *ngIf="application">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label nzSpan="24" nzRequired nzFor="so">Caso de pruebas</nz-form-label>
+        <nz-form-control nzSpan="24" nzErrorTip="Selecciona un caso de pruebas válido!">
+          <nz-select formControlName="case_id" nzAllowClear nzPlaceHolder="Selecciona">
+            <nz-option *ngFor="let case of cases" [nzValue]="case._id" [nzLabel]="case.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzSpan="24" nzRequired nzFor="so">Versión de la app</nz-form-label>
+        <nz-form-control nzSpan="24" nzErrorTip="Selecciona una versión válida!">
+          <nz-select formControlName="app_compilation_id" nzAllowClear nzPlaceHolder="Selecciona">
+            <nz-option *ngFor="let compilation of compilations" [nzValue]="compilation._id"
+              [nzLabel]="compilation.version"></nz-option>
+
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item style="text-align: right">
+        <nz-form-control>
+          <button nz-button [nzType]="'primary'">Solicitar</button>
+        </nz-form-control>
+      </nz-form-item>
+
+    </div>
+  </div>
+</form>

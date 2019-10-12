@@ -6,7 +6,7 @@ var multer = require('multer');
 // set the directory for the uploads to the uploaded to
 var storage = multer.diskStorage(
   {
-    destination: './testcases/',
+    destination: './cypress/integration/',
     filename: function (req, file, cb) {
       cb(null, req.headers.test_case_name);
     }
@@ -63,7 +63,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/raw/:file_name', function (req, res, next) {
-  fs.readFile(`testcases/${req.params.file_name}`, 'utf8', function (err, data) {
+  fs.readFile(`cypress/integration/${req.params.file_name}`, 'utf8', function (err, data) {
     if (err) throw err;
     console.log('OK: ' + req.params.file_name);
     console.log(data)

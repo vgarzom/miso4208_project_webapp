@@ -6,7 +6,7 @@ const resemble = require('resemblejs');
 const compareImages = require("resemblejs/compareImages");
 const public_directory = "./public/";
 var TestObject = require('../models/TestObject.model');
-var CypressSpecModel = require('../models/cypress-spec.model');
+var TestCaseModel = require('../models/TestCase.model');
 
 function makeid(length) {
   var result = '';
@@ -25,11 +25,92 @@ function compareImgs(img1, img2, oncomplete) {
     .onComplete(oncomplete);
 }
 
+/*
 router.post('/', function(req, res, next) {
   TestObject.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
+});
+*/
+router.post('/', function (req, res, next) {
+
+  TestCaseModel.findById(req.body.case_id, function (err, test_case) {
+    if (err) {
+      res.json({ code: 400, message: "Error consultando", error: err })
+    } else {
+      TestObject.create(req.body, function (err, newTest) {
+        if (err) return next(err);
+        console.log("newTest", newTest);
+        cypress.run({
+          spec: `./cypress/integration/${test_case.file_name}`,
+          config: {
+            video: false
+          }
+        })
+          .then((results) => {
+            console.log("results", results);
+            let data = results.runs[0];
+            let id = makeid(12);
+            if (data.error === null) {
+              data.screenshots.map((s, i) => {
+                s.name = `${id}_${i}.png`;
+                if (!fs.existsSync(public_directory)) {
+                  fs.mkdirSync(public_directory);
+                }
+                fs.copyFile(s.path, `${public_directory}${s.name}`, (err) => {
+                  if (err) throw err;
+                  s.path = `${public_directory}${s.name}`;
+                });
+              });
+
+              newTest.reporterStats = data.reporterStats;
+              newTest.error = data.error;
+              newTest.screenshots = data.screenshots;
+              if (newTest.reporterStats.passes === newTest.reporterStats.tests) {
+                newTest.status = "success";
+              } else {
+                newTest.status = "failed";
+              }
+
+              newTest.save().then(result => {
+                res.send({
+                  code: 200,
+                  data: result
+                });
+              }).catch(err => {
+                console.log("err", err);
+                res.send({
+                  code: 201,
+                  data: {
+                    reporterStats: data.reporterStats,
+                    error: data.error
+                  }
+                });
+              });
+            } else {
+              res.send({
+                code: 201,
+                data: {
+                  reporterStats: data.reporterStats,
+                  error: data.error
+                }
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+            res.send({
+              code: 202,
+              error: err
+            });
+          })
+
+      });
+    }
+  });
+
+
 });
 
 /* GET home page. */
