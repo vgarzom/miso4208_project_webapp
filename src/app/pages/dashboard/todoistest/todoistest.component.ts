@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CypressTestService } from 'src/app/service-clients/cypress-test.service';
-import { CypressTest } from '../../../../../api/models/cypress-test.model';
+import { TestObject } from '../../../../../api/models';
+import { TestObjectService } from 'src/app/service-clients/test-object.service';
 
 @Component({
   selector: 'app-todoistest',
@@ -11,17 +12,18 @@ import { CypressTest } from '../../../../../api/models/cypress-test.model';
 export class TodoistestComponent implements OnInit {
 
   testId: string;
-  cypresstest: CypressTest = null;
+  cypresstest: TestObject = null;
   loadingStatus: string = "";
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private cypressTestService: CypressTestService) { }
+    private cypressTestService: TestObjectService) { }
 
   ngOnInit() {
     this.loadingStatus = "loading";
     this.testId = this.activatedRoute.snapshot.paramMap.get("id");
-    this.cypressTestService.getById(this.testId, (res) => {
+    this.cypressTestService.getByID(this.testId, (res) => {
+      console.log("res", this.testId, res);
       this.loadingStatus = "found";
       this.cypresstest = res;
     }, (err) => {

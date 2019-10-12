@@ -5,6 +5,7 @@ import { ApplicationsComponent } from './applications.component';
 import { NewApplicationComponent } from './new-application/new-application.component';
 import { AppListComponent } from './app-list/app-list.component';
 import { EditApplicationComponent } from './edit-application/edit-application.component';
+import { TodoistestComponent } from '../todoistest/todoistest.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
       {
         path: 'appid/:appId',
         component: EditApplicationComponent
+      }
+      ,
+      {
+        path: 'test/:id',
+        component: TodoistestComponent
       }
     ]
   }

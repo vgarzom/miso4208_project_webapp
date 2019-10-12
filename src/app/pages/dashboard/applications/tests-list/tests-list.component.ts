@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestObject, ApplicationModel } from '../../../../../../api/models'
 import { TestObjectService } from '../../../../service-clients/test-object.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tests-list',
@@ -22,7 +23,8 @@ export class TestsListComponent implements OnInit {
   tests: TestObject[] = [];
 
   constructor(
-    private testObjectService: TestObjectService
+    private testObjectService: TestObjectService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,10 @@ export class TestsListComponent implements OnInit {
     }, (err) => {
       console.log("error looking for versions", err)
     });
+  }
+
+  selectTest(test) {
+    this.router.navigate([`/dashboard/apps/test/${test._id}`]);
   }
 
 

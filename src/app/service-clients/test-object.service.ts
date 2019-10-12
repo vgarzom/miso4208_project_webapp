@@ -26,7 +26,7 @@ export class TestObjectService {
   }
 
   getByID(id: string, callback, errorCallback): void {
-    this.http.get(`/api/tests/${id}`).subscribe(
+    this.http.get(`/api/tests/id/${id}`).subscribe(
       (res) => {
         callback(res);
       },

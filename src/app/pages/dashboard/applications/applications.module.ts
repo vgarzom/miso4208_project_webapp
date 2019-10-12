@@ -24,6 +24,7 @@ import { UploadTestCaseComponent } from './upload-test-case/upload-test-case.com
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TestsListComponent } from './tests-list/tests-list.component';
 import { TestResquesterComponent } from './test-resquester/test-resquester.component';
+import { TodoistestComponent } from '../todoistest/todoistest.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { TestResquesterComponent } from './test-resquester/test-resquester.compo
     TestcasesListComponent,
     UploadTestCaseComponent,
     TestsListComponent,
-    TestResquesterComponent
+    TestResquesterComponent,
+    TodoistestComponent
   ],
   providers: [
     CurrentUserService,
