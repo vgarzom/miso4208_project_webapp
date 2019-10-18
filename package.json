@@ -25,7 +25,6 @@
     "@ckeditor/ckeditor5-build-classic": "^12.4.0",
     "bluebird": "^3.7.0",
     "body-parser": "^1.19.0",
-    "cypress": "^3.4.1",
     "express": "^4.17.1",
     "md5": "^2.2.1",
     "mongoose": "^5.7.3",
