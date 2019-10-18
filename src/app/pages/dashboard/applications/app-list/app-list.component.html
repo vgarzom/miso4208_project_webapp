@@ -1,4 +1,10 @@
 <div class="inner-content">
+  <nz-result nzStatus="info" nzTitle="Aún no has creado ninguna aplicación" *ngIf="applications.length === 0" >
+    <div nz-result-extra>
+      <button nz-button nzType="primary" (click)="createNewApp()">Crear nueva app</button>
+    </div>
+  </nz-result>
+
   <nz-table #appsTable [nzData]="applications" nzBordered [nzTitle]="coverTemplate">
     <thead>
       <tr>

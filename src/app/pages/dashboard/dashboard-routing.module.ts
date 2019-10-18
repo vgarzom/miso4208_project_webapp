@@ -9,7 +9,7 @@ const routes: Routes = [
     component: DashboardComponent,
     data: { title: 'dashboard' },
     children: [
-      { path: '', redirectTo: 'redread-tests' },
+      { path: '', redirectTo: 'apps' },
       { path: 'redread-tests', component: RedReadTestListComponent, data: { title: "redread" } },
       { path: 'apps', loadChildren: () => import('./applications/applications.module').then(m => m.ApplicationsModule) }
     ]
