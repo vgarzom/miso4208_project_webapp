@@ -10,7 +10,7 @@ var TestObjectSchema = new mongoose.Schema({
   app_compilation_id: String,
   resemble: [Object],
   creation_date: {type: Date, default: Date.now},
-  status: {type: String, default: 'in-progress'}
+  status: {type: String, default: 'new'}
 });
 
 module.exports = mongoose.model('TestObject', TestObjectSchema, 'test-objects');

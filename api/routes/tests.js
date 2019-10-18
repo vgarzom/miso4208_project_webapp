@@ -25,14 +25,14 @@ function compareImgs(img1, img2, oncomplete) {
     .onComplete(oncomplete);
 }
 
-/*
+
 router.post('/', function(req, res, next) {
   TestObject.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
-*/
+/*
 router.post('/', function (req, res, next) {
 
   TestCaseModel.findById(req.body.case_id, function (err, test_case) {
