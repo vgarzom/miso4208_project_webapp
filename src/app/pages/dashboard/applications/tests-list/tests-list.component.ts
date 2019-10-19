@@ -33,6 +33,7 @@ export class TestsListComponent implements OnInit {
   getTests() {
     this.testObjectService.getByAppID(this.application._id, (result) => {
       this.tests = result;
+      console.log("tests", this.tests);
     }, (err) => {
       console.log("error looking for versions", err)
     });

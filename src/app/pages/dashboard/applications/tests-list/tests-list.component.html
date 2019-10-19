@@ -11,12 +11,12 @@
   <tbody>
     <tr *ngFor="let c of testsTable.data" (click)="selectTest(c)">
       <td>
-        {{c.case_id}}
+        {{c.case.name}}
       </td>
       <td>
-        {{c.app_compilation_id}}
+        {{c.compilation.version}}
       </td>
-      <td>{{c.user_id}}</td>
+      <td>{{c.user.email}}</td>
       <td>{{c.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
       <td>
         {{c.status}}

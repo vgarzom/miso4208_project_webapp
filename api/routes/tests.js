@@ -1,11 +1,22 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
+var mongoose = require('mongoose');
 const resemble = require('resemblejs');
 const compareImages = require("resemblejs/compareImages");
 const public_directory = "./public/";
 var TestObject = require('../models/TestObject.model');
 var TestCaseModel = require('../models/TestCase.model');
+var AWS = require('aws-sdk');
+
+AWS.config.update({
+  secretAccessKey: process.env.koko_secret_key,
+  accessKeyId: process.env.koko_key_id,
+  region: 'us-east-1'
+});
+// Create an SQS service 
+const queueURL = process.env.koko_sqs_url;
+var sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
 
 function makeid(length) {
   var result = '';
@@ -25,10 +36,28 @@ function compareImgs(img1, img2, oncomplete) {
 }
 
 
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
   TestObject.create(req.body, function (err, post) {
     if (err) return next(err);
+
     res.json(post);
+
+    var params = {
+      DelaySeconds: 10,
+      MessageAttributes: {},
+      MessageBody: JSON.stringify({ type: 'cypress', testId: 'fjdsalfjaslkdf' }),
+      QueueUrl: queueURL
+    };
+
+    sqs.sendMessage(params, function (err, data) {
+      if (err) {
+        console.log("Error", err);
+      } else {
+        console.log("Success", data.MessageId);
+      }
+    });
+
+
   });
 });
 /*
@@ -113,11 +142,44 @@ router.post('/', function (req, res, next) {
 });
 
 /* GET home page. */
-
+var test_aggregation = [{
+  $lookup: {
+    from: 'test-cases',
+    localField: 'case_id',
+    foreignField: '_id',
+    as: 'case'
+  }
+}, {
+  $unwind: "$case"
+}, {
+  $lookup: {
+    from: 'appcompilationmodels',
+    localField: 'app_compilation_id',
+    foreignField: '_id',
+    as: 'compilation'
+  }
+}, {
+  $unwind: "$compilation"
+}, {
+  $lookup: {
+    from: 'users',
+    localField: 'user_id',
+    foreignField: '_id',
+    as: 'user'
+  }
+}, {
+  $unwind: "$user"
+}, {
+  $project: {
+    "user.password": 0
+  }
+}];
 
 router.get('/', function (req, res, next) {
-  TestObject.find(function (err, products) {
-    if (err) return next(err);
+  TestObject.aggregate([
+    test_aggregation
+  ], (err, products) => {
+    if (err) next(err);
     res.json(products);
   }).sort('-creation_date');
 });
@@ -143,11 +205,15 @@ router.get('/id/:id', function (req, res, next) {
 });
 
 router.get('/appid/:appId', function (req, res, next) {
-  console.log("test");
-  TestObject.find({ app_id: req.params.appId }).sort({ created_date: -1 }).exec(function (err, tests) {
-    if (err) return next(err);
-    res.json(tests);
-  });
+  //const appId = new ObjectId(req.params.appId);
+  let aggregation = [{ $match: { app_id: mongoose.Types.ObjectId(req.params.appId) } }]; +
+
+    console.log("aggregation", aggregation);
+  TestObject.aggregate(aggregation.concat(test_aggregation), (err, products) => {
+    if (err) next(err);
+    res.json(products);
+  }).sort('-creation_date');
+
 });
 
 module.exports = router;
