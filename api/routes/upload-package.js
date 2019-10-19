@@ -1,17 +1,33 @@
 var express = require('express');
 var router = express.Router();
 var AppCompilationModel = require('../models/AppCompilation');
-
+var AWS = require('aws-sdk');
 var multer = require('multer');
+var multerS3 = require('multer-s3');
+
+AWS.config.update({
+  secretAccessKey: process.env.koko_secret_key,
+  accessKeyId: process.env.koko_key_id,
+  region: 'us-east-1'
+});
+
+var bucketName = process.env.koko_data_bucket;
+var s3 = new AWS.S3({ apiVersion: '2006-03-01' })
+var s3PackagesFolder = "mobile-packages/";
+
 // set the directory for the uploads to the uploaded to
-var storage = multer.diskStorage(
-  {
-    destination: './uploads/',
-    filename: function (req, file, cb) {
-      cb(null, req.headers.compilation_name);
-    }
-  }
-);
+
+var storage = multerS3({
+  s3: s3,
+  bucket: bucketName,
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
+  },
+  key: function (req, file, cb) {
+    cb(null, `${s3PackagesFolder}${req.headers.compilation_name}`)
+  },
+  acl: "public-read",
+})
 
 var upload = multer({ storage: storage }).array('file', 1);
 
