@@ -15,6 +15,7 @@ export class TestcasesListComponent implements OnInit {
   public Editor = ClassicEditor;
   private _application: ApplicationModel;
   selected_file: String = "";
+  loadingFile: boolean = false;
   visible: boolean = false;
   newtest_visible: boolean = false;
   @Input()
@@ -45,9 +46,11 @@ export class TestcasesListComponent implements OnInit {
   }
 
   selectFile(c: TestCaseModel) {
+    this.loadingFile = true;
+    this.visible = true;
     this.testCaseService.getContent(c.file_name, (data) => {
       this.selected_file = data;
-      this.visible = true;
+      this.loadingFile = false;
     })
   }
 

@@ -7,7 +7,6 @@ router.get('/', function (req, res, next) {
 });
 
 // Load here the whole api routes
-router.use("/cypress-test", require("./cypress-test"));
 router.use("/monkey-test", require("./monkey-test"));
 router.use("/cypress-case", require("./cypress-case"));
 router.use("/calabash-case", require("./calabash-case"));

@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const cypress = require('cypress')
 const fs = require('fs');
 const resemble = require('resemblejs');
 const compareImages = require("resemblejs/compareImages");
