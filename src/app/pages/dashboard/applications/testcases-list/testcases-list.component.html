@@ -38,5 +38,6 @@
 <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
   [nzMaskClosable]="true" [nzWidth]="720" [nzVisible]="visible" nzTitle="Contenido del archivo"
   (nzOnClose)="visible = false">
-  <ckeditor [editor]="Editor" [(ngModel)]="selected_file.data" [config]="{ toolbar: [] }" disabled="true"></ckeditor>
+  <nz-spin nzSimple [nzSize]="'large'" *ngIf="loadingFile"></nz-spin>
+  <ckeditor [editor]="Editor" [(ngModel)]="selected_file.data" [config]="{ toolbar: [] }" disabled="true" *ngIf="!loadingFile"></ckeditor>
 </nz-drawer>
