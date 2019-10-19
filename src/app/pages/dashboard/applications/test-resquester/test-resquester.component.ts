@@ -25,13 +25,20 @@ export class TestResquesterComponent implements OnInit {
   fileList: UploadFile[] = [];
   user: User;
 
+  types: any[] = [
+    {value: "cypress", name: "Cypress"},
+    {value: "gremlims", name: "Gremlims"},
+    {value: "calabash", name: "Calabash"},
+  ]
+
   private _application: ApplicationModel;
   @Input()
   set application(value: ApplicationModel) {
     this._application = value;
     this.validateForm = this.fb.group({
       app_compilation_id: [null, [Validators.required]],
-      case_id: [null, [Validators.required]]
+      case_id: [null, [Validators.required]],
+      type: [null, [Validators.required]]
     });
     this.getCases();
     this.getCompilations();
@@ -92,7 +99,8 @@ export class TestResquesterComponent implements OnInit {
         user_id: this.user._id,
         case_id: this.validateForm.get('case_id').value,
         app_id: this.application._id,
-        app_compilation_id: this.validateForm.get('app_compilation_id').value
+        app_compilation_id: this.validateForm.get('app_compilation_id').value,
+        type: this.validateForm.get('type').value
       },
       (result) => { 
         if (result) {
@@ -103,21 +111,7 @@ export class TestResquesterComponent implements OnInit {
         }
       }
     );
-    /*
-        this.appCompilationService.create({
-          version: this.validateForm.controls['version'].value,
-          description: this.validateForm.controls['description'].value,
-          app_id: this.application._id,
-          url: this.validateForm.get('url').value
-        }, (result) => {
-          if (result) {
-            this.msg.success('Compilación creada satisfactoriamente');
-            this.onCompilationCreated.emit();
-          } else {
-            this.msg.error('Ocurrió un error al crear la compilación.');
-          }
-        });
-    */
+    
   }
 
 
