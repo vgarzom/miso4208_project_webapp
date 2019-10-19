@@ -37,15 +37,14 @@ function compareImgs(img1, img2, oncomplete) {
 
 
 router.post('/', function (req, res, next) {
-  TestObject.create(req.body, function (err, post) {
+  TestObject.create(req.body, function (err, testObject) {
     if (err) return next(err);
-
-    res.json(post);
+    res.json(testObject);
 
     var params = {
       DelaySeconds: 10,
       MessageAttributes: {},
-      MessageBody: JSON.stringify({ type: 'cypress', testId: 'fjdsalfjaslkdf' }),
+      MessageBody: JSON.stringify({ type: testObject.type, test_id: testObject._id }),
       QueueUrl: queueURL
     };
 
@@ -53,11 +52,9 @@ router.post('/', function (req, res, next) {
       if (err) {
         console.log("Error", err);
       } else {
-        console.log("Success", data.MessageId);
+        console.log("message enqueued");
       }
     });
-
-
   });
 });
 /*
@@ -195,20 +192,21 @@ router.get('/last', function (req, res, next) {
 });
 
 router.get('/id/:id', function (req, res, next) {
-  TestObject.findById(req.params.id, function (err, post) {
+  let aggregation = [{ $match: { _id: mongoose.Types.ObjectId(req.params.id) } }];
+  TestObject.aggregate(aggregation.concat(test_aggregation), (err, testObjects) => {
     if (err) {
       res.json({ code: 400, message: "Error consultando", error: err })
+    } else if (testObjects.length > 0) {
+      res.json(testObjects[0]);
     } else {
-      res.json(post);
+      res.json({ code: 404, message: "Test not found" })
     }
   });
 });
 
 router.get('/appid/:appId', function (req, res, next) {
   //const appId = new ObjectId(req.params.appId);
-  let aggregation = [{ $match: { app_id: mongoose.Types.ObjectId(req.params.appId) } }]; +
-
-    console.log("aggregation", aggregation);
+  let aggregation = [{ $match: { app_id: mongoose.Types.ObjectId(req.params.appId) } }];
   TestObject.aggregate(aggregation.concat(test_aggregation), (err, products) => {
     if (err) next(err);
     res.json(products);
