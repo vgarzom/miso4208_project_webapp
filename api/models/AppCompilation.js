@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var AppCompilationSchema = new mongoose.Schema({
-  app_id: String,
+  app_id: {type: ObjectId, required: true},
   file_name: String,
   size: Number,
   url: String,
