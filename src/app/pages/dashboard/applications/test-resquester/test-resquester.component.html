@@ -2,6 +2,15 @@
   <div nz-row *ngIf="application">
     <div nz-col nzSpan="24">
       <nz-form-item>
+        <nz-form-label nzSpan="24" nzRequired nzFor="type">Tipo de pruebas</nz-form-label>
+        <nz-form-control nzSpan="24" nzErrorTip="Selecciona un tipo de pruebas válido!">
+          <nz-select formControlName="type" nzAllowClear nzPlaceHolder="Selecciona">
+            <nz-option *ngFor="let type of types" [nzValue]="type.value" [nzLabel]="type.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
         <nz-form-label nzSpan="24" nzRequired nzFor="so">Caso de pruebas</nz-form-label>
         <nz-form-control nzSpan="24" nzErrorTip="Selecciona un caso de pruebas válido!">
           <nz-select formControlName="case_id" nzAllowClear nzPlaceHolder="Selecciona">
