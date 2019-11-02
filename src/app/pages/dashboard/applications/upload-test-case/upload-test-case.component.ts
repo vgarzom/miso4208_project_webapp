@@ -110,20 +110,11 @@ export class UploadTestCaseComponent implements OnInit {
       name: 'type',
       fn: (fileList: UploadFile[]) => {
         const filterFiles = fileList.filter(w => {
-          if (w.type !== "text/javascript") {
-            return 0;
-          }
-          let names = w.name.split(".");
-          if (names.length < 3) {
-            return 0;
-          }
-          if (`${names[names.length - 2]}.${names[names.length - 1]}` !== 'spec.js') {
-            return 0
-          }
-          return 1;
+          let index = w.name.indexOf(this.validateForm.get('type').value['extension']);
+          return index === -1 ? 0 : 1
         });
         if (filterFiles.length !== fileList.length) {
-          this.msg.error(`Por favor selecciona un archivo con extensión .spec.js`);
+          this.msg.error(`Por favor selecciona un archivo con extensión ${this.validateForm.get('type').value['extension']}`);
           return filterFiles;
         }
         return fileList;
@@ -155,7 +146,7 @@ export class UploadTestCaseComponent implements OnInit {
     let c = {
       name: this.validateForm.controls['name'].value,
       description: this.validateForm.controls['description'].value,
-      file_name: this.makeid(12) + ".spec.js",
+      file_name: this.makeid(12) + this.validateForm.get('type').value['extension'],
       app_id: this.application._id,
       type: this.validateForm.controls['type'].value.type,
       count: this.validateForm.get('count').value,

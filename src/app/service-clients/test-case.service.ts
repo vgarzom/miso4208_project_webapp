@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 
 const cases = {
   mobile: [
-    { type: 'monkeys', name: "Monkeys", content_type: 'text', count: true, seed: true },
-    { type: 'calabash', name: "Calabash", content_type: 'file', count: false, seed: false }
+    { type: 'monkeys', name: "Monkeys", content_type: 'text', count: true, seed: true, extension: '' },
+    { type: 'calabash', name: "Calabash", content_type: 'file', count: false, seed: false, extension: '.feature' }
   ],
   web: [
-    { type: 'cypress', name: "Cypress", content_type: 'file', count: false, seed: false },
-    { type: 'gremlins', name: "Gremlins", content_type: 'text', count: true, seed: false }
+    { type: 'cypress', name: "Cypress", content_type: 'file', count: false, seed: false, extension: '.spec.js' },
+    { type: 'gremlins', name: "Gremlins", content_type: 'text', count: true, seed: false, extension: '' }
   ]
 }
 

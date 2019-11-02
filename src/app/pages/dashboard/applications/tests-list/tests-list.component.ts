@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class TestsListComponent implements OnInit {
   private _application: TestObject;
   visible = false;
+  visibleLog = false;
   loadingFile = false;
   selected_file;
   @Input()
@@ -43,9 +44,9 @@ export class TestsListComponent implements OnInit {
   }
 
   selectTest(test) {
-    if (test.type === 'monkeys') {
+    if (test.type === 'monkeys' || test.type === 'calabash') {
       this.loadingFile = true;
-      this.visible = true;
+      this.visibleLog = true;
       this.testObjectService.getLog(test._id, (data) => {
         this.selected_file = data;
         this.loadingFile = false;
