@@ -11,8 +11,12 @@ AWS.config.update({
   region: 'us-east-1'
 });
 // Create an SQS service 
-const queueURL = process.env.koko_sqs_url;
+const queueURL_web = process.env.koko_sqs_url;
+const queueURL_mobile = process.env.koko_sqs_mobile_url;
 var sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
+
+var bucketName = process.env.koko_data_bucket;
+var s3 = new AWS.S3({ apiVersion: '2006-03-01' })
 
 router.post('/', function (req, res, next) {
   TestObject.create(req.body, function (err, testObject) {
@@ -23,7 +27,7 @@ router.post('/', function (req, res, next) {
       DelaySeconds: 10,
       MessageAttributes: {},
       MessageBody: JSON.stringify({ type: testObject.type, test_id: testObject._id }),
-      QueueUrl: queueURL
+      QueueUrl: req.body.application_type === 'web' ? queueURL_web : queueURL_mobile
     };
 
     sqs.sendMessage(params, function (err, data) {
@@ -110,6 +114,16 @@ router.get('/appid/:appId', function (req, res, next) {
     res.json(products);
   }).sort('-creation_date');
 
+});
+
+router.get('/raw/:test_id', function (req, res, next) {
+  s3.getObject({Bucket: bucketName, Key: `logs/${req.params.test_id}.log`}, function(err, data) {
+    if (err) {
+      res.json({ code: 400, data: "No fue posible cargar el archivo" });
+    } else {
+      res.json({ code: 200, data: data.Body.toString('ascii') });
+    }
+  });
 });
 
 module.exports = router;

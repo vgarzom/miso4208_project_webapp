@@ -5,7 +5,7 @@
         <nz-form-label nzSpan="24" nzRequired nzFor="type">Tipo de pruebas</nz-form-label>
         <nz-form-control nzSpan="24" nzErrorTip="Selecciona un tipo de pruebas válido!">
           <nz-select formControlName="type" nzAllowClear nzPlaceHolder="Selecciona">
-            <nz-option *ngFor="let type of types" [nzValue]="type.value" [nzLabel]="type.name"></nz-option>
+            <nz-option *ngFor="let type of types" [nzValue]="type.type" [nzLabel]="type.name"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>

@@ -25,11 +25,7 @@ export class TestResquesterComponent implements OnInit {
   fileList: UploadFile[] = [];
   user: User;
 
-  types: any[] = [
-    {value: "cypress", name: "Cypress"},
-    {value: "gremlims", name: "Gremlims"},
-    {value: "calabash", name: "Calabash"},
-  ]
+  types: any[] = []
 
   private _application: ApplicationModel;
   @Input()
@@ -40,6 +36,7 @@ export class TestResquesterComponent implements OnInit {
       case_id: [null, [Validators.required]],
       type: [null, [Validators.required]]
     });
+    this.types = this.testCaseService.getTestCases(this.application.type);
     this.getCases();
     this.getCompilations();
   }
@@ -97,6 +94,7 @@ export class TestResquesterComponent implements OnInit {
     this.testObjectService.create(
       {
         user_id: this.user._id,
+        application_type: this.application.type,
         case_id: this.validateForm.get('case_id').value,
         app_id: this.application._id,
         app_compilation_id: this.validateForm.get('app_compilation_id').value,

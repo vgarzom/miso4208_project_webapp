@@ -8,7 +8,9 @@ var TestCaseSchema = new mongoose.Schema({
   description: String,
   file_name: String,
   size: Number,
-  creation_date: {type: Date, default: Date.now}
+  creation_date: {type: Date, default: Date.now},
+  count: Number,
+  seed: Number
 });
 
 module.exports = mongoose.model('TestCaseModel', TestCaseSchema, 'test-cases');
