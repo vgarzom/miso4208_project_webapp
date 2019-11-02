@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class TestsListComponent implements OnInit {
   private _application: TestObject;
+  visible = false;
+  loadingFile = false;
+  selected_file;
   @Input()
   set application(value: ApplicationModel) {
     this._application = value;
@@ -40,7 +43,16 @@ export class TestsListComponent implements OnInit {
   }
 
   selectTest(test) {
-    this.router.navigate([`/dashboard/apps/test/${test._id}`]);
+    if (test.type === 'monkeys') {
+      this.loadingFile = true;
+      this.visible = true;
+      this.testObjectService.getLog(test._id, (data) => {
+        this.selected_file = data;
+        this.loadingFile = false;
+      })
+    }
+    else
+      this.router.navigate([`/dashboard/apps/test/${test._id}`]);
   }
 
 

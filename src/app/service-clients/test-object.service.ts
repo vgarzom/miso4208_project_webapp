@@ -46,4 +46,12 @@ export class TestObjectService {
       })
   }
 
+  getLog(testId: String, callback): void {
+    this.http.get(`api/tests/raw/${testId}`).subscribe(
+      (data) => {
+        callback(data);
+      }
+    )
+  }
+
 }

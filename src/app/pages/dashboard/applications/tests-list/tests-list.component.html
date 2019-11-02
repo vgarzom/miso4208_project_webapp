@@ -20,7 +20,7 @@
       <td>{{c.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
       <td>
           <nz-badge nzStatus="success" nzText="Exitosa" *ngIf="c.status === 'success'"></nz-badge>
-          <nz-badge nzStatus="error" nzText="Falló" *ngIf="c.status === 'fail'"></nz-badge>
+          <nz-badge nzStatus="error" nzText="Falló" *ngIf="c.status === 'failed'"></nz-badge>
           <nz-badge nzStatus="default" nzText="En espera" *ngIf="c.status === 'new'"></nz-badge>
           <nz-badge nzStatus="processing" nzText="En progreso" *ngIf="c.status === 'in-progress'"></nz-badge>
       </td>
@@ -43,4 +43,11 @@
   [nzMaskClosable]="true" [nzWidth]="360" [nzVisible]="visible" nzTitle="Nueva solicitud de pruebas"
   (nzOnClose)="visible = false">
   <app-test-resquester [application]="application" (onRequestCreated)="getTests()"></app-test-resquester>
+</nz-drawer>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true" [nzWidth]="720" [nzVisible]="visible" nzTitle="Contenido del archivo"
+  (nzOnClose)="visible = false">
+  <nz-spin nzSimple [nzSize]="'large'" *ngIf="loadingFile"></nz-spin>
+  <ckeditor [editor]="Editor" [(ngModel)]="selected_file.data" [config]="{ toolbar: [] }" disabled="true" *ngIf="!loadingFile && selected_file"></ckeditor>
 </nz-drawer>
