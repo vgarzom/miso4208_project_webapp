@@ -11,7 +11,8 @@ AWS.config.update({
   region: 'us-east-1'
 });
 // Create an SQS service 
-const queueURL = process.env.koko_sqs_url;
+const queueURL_web = process.env.koko_sqs_url;
+const queueURL_mobile = process.env.koko_sqs_mobile_url;
 var sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
 
 router.post('/', function (req, res, next) {
@@ -23,7 +24,7 @@ router.post('/', function (req, res, next) {
       DelaySeconds: 10,
       MessageAttributes: {},
       MessageBody: JSON.stringify({ type: testObject.type, test_id: testObject._id }),
-      QueueUrl: queueURL
+      QueueUrl: req.body.application_type === 'web' ? queueURL_web : queueURL_mobile
     };
 
     sqs.sendMessage(params, function (err, data) {

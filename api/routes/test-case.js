@@ -17,7 +17,7 @@ var s3 = new AWS.S3({ apiVersion: '2006-03-01' })
 var s3PackagesFolder = "test-cases/";
 
 //our file upload function.
-router.post('/', function (req, res, next) {
+router.post('/upload/', function (req, res, next) {
 
   //
   console.log('Uploading a cypress spec --> ', req.headers);
@@ -54,6 +54,17 @@ router.post('/', function (req, res, next) {
       }
     });
   })
+});
+
+router.post('/', function(req, res, next) {
+  TestCaseModel.create(req.body, function (err, post) {
+    if (err) {
+      return res.status(500).send({ code: 500, message: err });
+    }
+    else {
+      return res.status(200).send({ code: 200, cypressSpec: post });
+    }
+  });
 });
 
 router.get('/appid/:appId', function (req, res, next) {

@@ -1,6 +1,17 @@
 import { Injectable, ApplicationModule } from '@angular/core';
-import { AppCompilationModel } from '../../../api/models/AppCompilation';
+import { TestCase } from '../../../api/models/TestCase.model';
 import { HttpClient } from '@angular/common/http';
+
+const cases = {
+  mobile: [
+    { type: 'monkeys', name: "Monkeys", content_type: 'text', count: true, seed: true },
+    { type: 'calabash', name: "Calabash", content_type: 'file', count: false, seed: false }
+  ],
+  web: [
+    { type: 'cypress', name: "Cypress", content_type: 'file', count: false, seed: false },
+    { type: 'gremlins', name: "Gremlins", content_type: 'text', count: true, seed: false }
+  ]
+}
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +47,8 @@ export class TestCaseService {
     )
   }
 
-  create(compilation: AppCompilationModel, callback): void {
-    this.http.post('/api/test-case', compilation).subscribe(
+  create(testCase: TestCase, callback): void {
+    this.http.post('/api/test-case', testCase).subscribe(
       (res) => {
         callback(true);
       },
@@ -52,6 +63,10 @@ export class TestCaseService {
         callback(data);
       }
     )
+  }
+
+  getTestCases(application_type: string): [] {
+    return cases[application_type];
   }
 
 }

@@ -6,6 +6,9 @@ import { Observable, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApplicationModel, TestCaseModel } from '../../../../../../api/models';
 import { AppCompilationService } from 'src/app/service-clients/app-compilation.service';
+import { TestCaseService } from 'src/app/service-clients/test-case.service';
+
+
 
 @Component({
   selector: 'app-upload-test-case',
@@ -20,9 +23,11 @@ export class UploadTestCaseComponent implements OnInit {
     this._application = value;
     if (this._application.type === 'web') {
       this.validateForm = this.fb.group({
-        version: [null, [Validators.required]],
+        type: [null, [Validators.required]],
+        name: [null, [Validators.required]],
         description: [null, [Validators.required]],
-        url: [null, [Validators.required]]
+        count: [null, [Validators.min(1000)]],
+        seed: [null]
       });
     }
   }
@@ -47,16 +52,19 @@ export class UploadTestCaseComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
-    private msg: NzMessageService
+    private msg: NzMessageService,
+    private testCaseService: TestCaseService
   ) {
 
   }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
+      type: [null, [Validators.required]],
       name: [null, [Validators.required]],
       description: [null, [Validators.required]],
-      type: [null, [Validators.required]]
+      count: [null, [Validators.min(1000)]],
+      seed: [null]
     });
   }
 
@@ -66,9 +74,35 @@ export class UploadTestCaseComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    if (this.validateForm.valid) {
-      this.handleUpload();
+    if (!this.validateForm.valid) {
+      console.log("form invalid");
+      return;
     }
+    if (this.validateForm.get('type').value.content_type === 'file') {
+      console.log("trying to upload file");
+      this.handleUpload();
+      return;
+    }
+
+    console.log("sending data directly");
+    let c = {
+      name: this.validateForm.controls['name'].value,
+      description: this.validateForm.controls['description'].value,
+      file_name: null,
+      app_id: this.application._id,
+      type: this.validateForm.controls['type'].value.type,
+      count: this.validateForm.get('count').value,
+      seed: this.validateForm.get('seed').value
+    }
+    this.testCaseService.create(c, (result) => {
+      if (result) {
+        this.msg.success('Caso de prueba creado satisfactoriamente.');
+        this.onTestCaseCreated.emit();
+        this.validateForm.reset();
+      } else {
+        this.msg.error("No fue posible crear el caso de prueba. Intenta nuevamente");
+      }
+    });
   }
 
   filters: UploadFilter[] = [
@@ -108,6 +142,7 @@ export class UploadTestCaseComponent implements OnInit {
   ];
 
   handleUpload(): void {
+
     const formData = new FormData();
     // tslint:disable-next-line:no-any
     this.fileList.forEach((file: any) => {
@@ -122,14 +157,16 @@ export class UploadTestCaseComponent implements OnInit {
       description: this.validateForm.controls['description'].value,
       file_name: this.makeid(12) + ".spec.js",
       app_id: this.application._id,
-      type: this.validateForm.controls['type'].value
+      type: this.validateForm.controls['type'].value.type,
+      count: this.validateForm.get('count').value,
+      seed: this.validateForm.get('seed').value
     }
     console.log("c", c);
     const headers = new HttpHeaders({
       test_case_data: JSON.stringify(c),
       test_case_name: c.file_name
     });
-    const req = new HttpRequest('POST', '/api/test-case', formData, {
+    const req = new HttpRequest('POST', '/api/test-case/upload', formData, {
       reportProgress: true,
       headers: headers
     });
@@ -169,6 +206,10 @@ export class UploadTestCaseComponent implements OnInit {
       );
   }
 
+  getTestCases() {
+    return this.testCaseService.getTestCases(this.application.type);
+  }
+
   makeid(length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -177,5 +218,18 @@ export class UploadTestCaseComponent implements OnInit {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+  }
+
+
+  isSubmitButtonDisabled() {
+    if (this.validateForm.get('type').value !== null && this.validateForm.get('type').value.content_type === 'text') {
+      return false;
+    }
+
+    if (this.validateForm.get('type').value !== null && this.validateForm.get('type').value.content_type === 'file') {
+      return this.fileList.length === 0;
+    }
+
+    return this.uploading;
   }
 }
