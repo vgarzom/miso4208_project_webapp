@@ -1,6 +1,7 @@
 # VisualRegressionTestingApp
 
 ## Versions
+- 0.0.4: monkeys, logs, calabash
 - 0.0.3: All test are sent to sqs to be processed by workers.
 - 0.0.2: All data is stored in aws s3 bucket.
 - 0.0.1: Project is created with base features.
