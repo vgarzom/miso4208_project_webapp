@@ -57,10 +57,11 @@ export class TestCaseService {
       })
   }
 
-  getContent(fileName: String, callback): void {
-    this.http.get(`api/test-case/raw/${fileName}`).subscribe(
+  getContent(type: String, fileName: String, callback): void {
+    this.http.get<any>(`api/test-case/raw/${type}/${fileName}`).subscribe(
       (data) => {
-        callback(data);
+        console.log("data", data);
+        callback(data.data.replace(new RegExp('\n', 'g'), "<br />"));
       }
     )
   }
