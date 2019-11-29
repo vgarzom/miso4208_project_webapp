@@ -4,6 +4,7 @@ import { VrtComparatorComponent } from './vrt-comparator.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TestObjectService } from 'src/app/service-clients/test-object.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ResembleDataService } from 'src/app/service-clients/resemble-data.service';
 
 @NgModule({
   declarations: [VrtComparatorComponent],
@@ -14,6 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   exports: [VrtComparatorComponent],
-  providers: [TestObjectService]
+  providers: [TestObjectService, ResembleDataService]
 })
 export class VrtComparatorModule { }

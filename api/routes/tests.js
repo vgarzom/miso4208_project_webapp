@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-const resemble = require('resemblejs');
 var TestObject = require('../models/TestObject.model');
 var AWS = require('aws-sdk');
 

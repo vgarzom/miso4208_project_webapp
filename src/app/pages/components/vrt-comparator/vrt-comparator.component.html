@@ -6,7 +6,7 @@
         <nz-form-label [nzSm]="12" [nzXs]="24" nzFor="other-test">Comparar con prueba realizada en</nz-form-label>
         <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Selecciona un test para comparar">
           <nz-select nzAllowClear nzPlaceHolder="Selecciona" [(ngModel)]="selectedTest" style="width: 100%;"
-            [nzCustomTemplate]="custom" (ngModelChange)="onSelectedTest(test)">
+            [nzCustomTemplate]="custom">
             <nz-option nzCustomContent *ngFor="let t of otherTests" [nzValue]="t" [nzLabel]="t">
 
               {{t.compilation.version}}
@@ -27,17 +27,75 @@
       </nz-form-item>
     </nz-col>
     <nz-col nzSpan="4">
-        <button nz-button nzType="primary" (click)="compare" [nzLoading]="isLoading" [disabled]="!selectedTest">Comparar</button>
+      <button nz-button nzType="primary" (click)="compare()" [nzLoading]="isLoading"
+        [disabled]="!selectedTest">Comparar</button>
     </nz-col>
 
   </div>
+  <nz-divider></nz-divider>
+  <div nz-row nzGutter="16">
+    <div nz-col nzGutter="16" nzSpan="5">
+      <span nz-text><strong>Pantallazo {{index}}</strong></span>
+      <nz-card nzHoverable style="width:100%" [nzCover]="testTemplate">
+        <nz-card-meta nzTitle="Actual"></nz-card-meta>
+      </nz-card>
+      <br />
+      <nz-card nzHoverable style="width:100%" [nzCover]="otherTestTemplate" *ngIf="selectedTest">
+        <nz-card-meta nzTitle="A comparar"></nz-card-meta>
+      </nz-card>
+    </div>
+    <div nz-col nzGutter=16 nzSpan="19" *ngIf="resembleData">
+      <nz-descriptions nzTitle="Resultados de la comparación" nzBordered [nzSize]="'small'" nzLayout="vertical">
+        <nz-descriptions-item nzTitle="Porcentaje de diferencias">{{resembleData.result.misMatchPercentage}}%
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Dimensiones iguales">
+          <nz-badge nzStatus="success" nzText="Si" *ngIf="resembleData.result.isSameDimensions"></nz-badge>
+          <nz-badge nzStatus="error" nzText="No" *ngIf="!resembleData.result.isSameDimensions"></nz-badge>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Diferencias en dimensiones">
+          <ul>
+            <li>Ancho: {{resembleData.result.dimensionDifference.width}}</li>
+            <li>Alto: {{resembleData.result.dimensionDifference.height}}</li>
+          </ul>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="límites de diferencias">
+          <span>
+            <i nz-icon nzType="arrow-up" nzTheme="outline"></i> {{resembleData.result.diffBounds.top}}
+          </span>
+          <nz-divider nzType="vertical"></nz-divider>
+          <span>
+            <i nz-icon nzType="arrow-down" nzTheme="outline"></i> {{resembleData.result.diffBounds.bottom}}
+          </span>
+          <nz-divider nzType="vertical"></nz-divider>
+          <span>
+            <i nz-icon nzType="arrow-left" nzTheme="outline"></i> {{resembleData.result.diffBounds.left}}
+          </span>
+          <nz-divider nzType="vertical"></nz-divider>
+          <span>
+            <i nz-icon nzType="arrow-right" nzTheme="outline"></i>{{resembleData.result.diffBounds.right}}
+          </span>
 
-  <nz-card nzHoverable style="width:300px" [nzCover]="coverTemplate">
-    <nz-card-meta nzTitle="screenshot {{index + 1}}"></nz-card-meta>
-  </nz-card>
+        </nz-descriptions-item>
+      </nz-descriptions>
 
-  <ng-template #coverTemplate>
+      <nz-divider nzText="Imagen Resultado" nzOrientation="right"></nz-divider>
+      <nz-card nzHoverable style="width:100%" [nzCover]="comparisonTestTemplate" *ngIf="resembleData">
+      </nz-card>
+    </div>
+  </div>
+
+  <ng-template #testTemplate>
     <img src="https://koko-testing-storage.s3.us-east-2.amazonaws.com/images/{{test.screenshots[index].name}}"
       [ngStyle]="{ width: '100%' }" />
+  </ng-template>
+
+  <ng-template #otherTestTemplate>
+    <img src="https://koko-testing-storage.s3.us-east-2.amazonaws.com/images/{{selectedTest.screenshots[index].name}}"
+      [ngStyle]="{ width: '100%' }" />
+  </ng-template>
+
+
+  <ng-template #comparisonTestTemplate>
+    <img [src]="comparison_image_url" [ngStyle]="{ width: '100%' }" />
   </ng-template>
 </div>
