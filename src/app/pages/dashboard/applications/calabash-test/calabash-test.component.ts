@@ -34,7 +34,6 @@ export class CalabashTestComponent implements OnInit {
     if(!this.test) {
       return 0;
     }
-    console.log(this.test.end_date);
     return (new Date(this.test.end_date)).getTime() - (new Date(this.test.start_date)).getTime();
   }
 
