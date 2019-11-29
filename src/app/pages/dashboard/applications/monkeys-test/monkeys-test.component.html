@@ -1,0 +1,47 @@
+<div class="inner-content">
+    <nz-descriptions nzTitle="Información de la prueba" nzBordered *ngIf="test">
+      <nz-descriptions-item nzTitle="Versión de la App">
+        <nz-tag [nzColor]="'#2db7f5'">{{test.compilation.version}}</nz-tag>
+      </nz-descriptions-item>
+  
+      <nz-descriptions-item nzTitle="Tipo de prueba">{{test.type}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Caso de prueba">{{test.case.name}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Descripción del caso" [nzSpan]="3">{{test.case.description}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Semilla">{{test.case.seed}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Solicitado por">{{test.user.email}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Fecha de solicitud">{{test.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}
+      </nz-descriptions-item>
+  
+      <nz-descriptions-item nzTitle="Hora de inicio">
+        {{test.start_date | date: 'dd/MM/yyyy hh:mm:ss a' : '+00'}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Hora de finalización">
+        {{test.end_date | date: 'dd/MM/yyyy hh:mm:ss a' : '+00'}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Duración">
+        {{getDuration() | date: 'mm:ss'}} mins.
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Estado">
+        <nz-badge nzStatus="success" nzText="Completada" *ngIf="test.status === 'completed'"></nz-badge>
+        <nz-badge nzStatus="error" nzText="Falló" *ngIf="test.status === 'failed'"></nz-badge>
+        <nz-badge nzStatus="default" nzText="En espera" *ngIf="test.status === 'new'"></nz-badge>
+        <nz-badge nzStatus="processing" nzText="En progreso" *ngIf="test.status === 'in-progress'"></nz-badge>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Resultado">
+        <nz-badge nzStatus="success" nzText="Exitosa" *ngIf="test.result === 'success'"></nz-badge>
+        <nz-badge nzStatus="error" nzText="Falló" *ngIf="test.result === 'failed'"></nz-badge>
+      </nz-descriptions-item>
+  
+  
+    </nz-descriptions>
+  
+    <nz-divider></nz-divider>
+    <nz-tabset>
+      <nz-tab nzTitle="Log">
+        <nz-spin nzSimple [nzSize]="'large'" *ngIf="!log"></nz-spin>
+        <code [innerHTML]="log" style="font-size: 0.8em;"></code>
+      </nz-tab>
+    </nz-tabset>
+  
+    
+  </div>

@@ -90,12 +90,12 @@ router.get('/', function (req, res, next) {
   }).sort('-creation_date');
 });
 
-router.get('/raw/:file_name', function (req, res, next) {
-  s3.getObject({Bucket: bucketName, Key: `test-cases/cypress/${req.params.file_name}`}, function(err, data) {
+router.get('/raw/:type/:file_name', function (req, res, next) {
+  s3.getObject({Bucket: bucketName, Key: `test-cases/${req.params.type}/${req.params.file_name}`}, function(err, data) {
     if (err) {
       res.json({ code: 400, data: "No fue posible cargar el archivo" });
     } else {
-      res.json({ code: 200, data: data.Body.toString('ascii') });
+      res.json({ code: 200, data: data.Body.toString('utf-8') });
     }
   });
 });
