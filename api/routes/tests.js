@@ -121,7 +121,7 @@ router.get('/raw/:test_id', function (req, res, next) {
     if (err) {
       res.json({ code: 400, data: "No fue posible cargar el archivo" });
     } else {
-      res.json({ code: 200, data: data.Body.toString('ascii') });
+      res.json({ code: 200, data: data.Body.toString('utf-8') });
     }
   });
 });

@@ -44,13 +44,16 @@ export class TestsListComponent implements OnInit {
   }
 
   selectTest(test) {
-    if (test.type === 'monkeys' || test.type === 'calabash') {
+    if (test.type === 'monkeys') {
       this.loadingFile = true;
       this.visibleLog = true;
       this.testObjectService.getLog(test._id, (data) => {
         this.selected_file = data;
         this.loadingFile = false;
       })
+    }
+    else if (test.type === 'calabash') {
+      this.router.navigate([`/dashboard/apps/calabash/${test._id}`]);
     }
     else
       this.router.navigate([`/dashboard/apps/test/${test._id}`]);

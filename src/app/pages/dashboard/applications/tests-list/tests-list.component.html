@@ -6,6 +6,7 @@
       <th>Solicitó</th>
       <th>Fecha de creación</th>
       <th>Estado</th>
+      <th>Resultado</th>
     </tr>
   </thead>
   <tbody>
@@ -19,11 +20,15 @@
       <td>{{c.user.email}}</td>
       <td>{{c.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
       <td>
-          <nz-badge nzStatus="success" nzText="Exitosa" *ngIf="c.status === 'success'"></nz-badge>
+          <nz-badge nzStatus="success" nzText="Completada" *ngIf="c.status === 'completed'"></nz-badge>
           <nz-badge nzStatus="error" nzText="Falló" *ngIf="c.status === 'failed'"></nz-badge>
           <nz-badge nzStatus="default" nzText="En espera" *ngIf="c.status === 'new'"></nz-badge>
           <nz-badge nzStatus="processing" nzText="En progreso" *ngIf="c.status === 'in-progress'"></nz-badge>
       </td>
+      <td>
+        <nz-badge nzStatus="success" nzText="Exitosa" *ngIf="c.result === 'success'"></nz-badge>
+        <nz-badge nzStatus="error" nzText="Falló" *ngIf="c.result === 'failed'"></nz-badge>
+    </td>
     </tr>
   </tbody>
 </nz-table>

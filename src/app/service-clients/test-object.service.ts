@@ -47,9 +47,12 @@ export class TestObjectService {
   }
 
   getLog(testId: String, callback): void {
-    this.http.get(`api/tests/raw/${testId}`).subscribe(
+    this.http.get<any>(`api/tests/raw/${testId}`).subscribe(
       (data) => {
-        callback(data);
+        if (data.code !== 200) {
+          callback("Not log found")
+        }
+        callback(data.data.replace(new RegExp('\n', 'g'), "<br />"));
       }
     )
   }

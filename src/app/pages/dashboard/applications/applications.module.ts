@@ -25,6 +25,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TestsListComponent } from './tests-list/tests-list.component';
 import { TestResquesterComponent } from './test-resquester/test-resquester.component';
 import { TodoistestComponent } from '../todoistest/todoistest.component';
+import { CalabashTestComponent } from './calabash-test/calabash-test.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { TodoistestComponent } from '../todoistest/todoistest.component';
     UploadTestCaseComponent,
     TestsListComponent,
     TestResquesterComponent,
-    TodoistestComponent
+    TodoistestComponent,
+    CalabashTestComponent
   ],
   providers: [
     CurrentUserService,
