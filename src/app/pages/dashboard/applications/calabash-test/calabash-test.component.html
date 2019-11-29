@@ -67,8 +67,6 @@
 
   <nz-divider nzText="Log" nzOrientation="left"></nz-divider>
   <nz-spin nzSimple [nzSize]="'large'" *ngIf="!log"></nz-spin>
-  <code *ngIf="log">
-{{log.data}}
-  </code>
+  <code [innerHTML]="log"></code>
   <!--<ckeditor [editor]="Editor" [(ngModel)]="log.data" [config]="{ toolbar: [] }" disabled="true" *ngIf="log"></ckeditor>-->
 </div>
