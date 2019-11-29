@@ -7,6 +7,7 @@ import { AppListComponent } from './app-list/app-list.component';
 import { EditApplicationComponent } from './edit-application/edit-application.component';
 import { TodoistestComponent } from '../todoistest/todoistest.component';
 import { CalabashTestComponent } from './calabash-test/calabash-test.component';
+import { MonkeysTestComponent } from './monkeys-test/monkeys-test.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,11 @@ const routes: Routes = [
       {
         path: 'calabash/:id',
         component: CalabashTestComponent
+      }
+      ,
+      {
+        path: 'monkeys/:id',
+        component: MonkeysTestComponent
       }
     ]
   }

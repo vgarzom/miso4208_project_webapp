@@ -27,6 +27,7 @@ import { TestResquesterComponent } from './test-resquester/test-resquester.compo
 import { TodoistestComponent } from '../todoistest/todoistest.component';
 import { CalabashTestComponent } from './calabash-test/calabash-test.component';
 import { VrtComparatorModule } from '../../components/vrt-comparator/vrt-comparator.module';
+import { MonkeysTestComponent } from './monkeys-test/monkeys-test.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { VrtComparatorModule } from '../../components/vrt-comparator/vrt-compara
     TestsListComponent,
     TestResquesterComponent,
     TodoistestComponent,
-    CalabashTestComponent
+    CalabashTestComponent,
+    MonkeysTestComponent
   ],
   providers: [
     CurrentUserService,
