@@ -1,0 +1,74 @@
+<div class="inner-content">
+  <nz-descriptions nzTitle="Información de la prueba" nzBordered *ngIf="test">
+    <nz-descriptions-item nzTitle="Versión de la App">
+      <nz-tag [nzColor]="'#2db7f5'">{{test.compilation.version}}</nz-tag>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Caso de prueba">{{test.case.name}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Descripción del caso">{{test.case.description}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Hora de inicio">
+      {{test.start_date | date: 'dd/MM/yyyy hh:mm:ss a'}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Hora de finalización">
+      {{test.end_date | date: 'dd/MM/yyyy hh:mm:ss a'}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Duración">
+      {{getDuration() | date: 'mm:ss'}} mins.
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Estado">
+      <nz-badge nzStatus="success" nzText="Completada" *ngIf="test.status === 'completed'"></nz-badge>
+      <nz-badge nzStatus="error" nzText="Falló" *ngIf="test.status === 'failed'"></nz-badge>
+      <nz-badge nzStatus="default" nzText="En espera" *ngIf="test.status === 'new'"></nz-badge>
+      <nz-badge nzStatus="processing" nzText="En progreso" *ngIf="test.status === 'in-progress'"></nz-badge>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Resultado">
+      <nz-badge nzStatus="success" nzText="Exitosa" *ngIf="test.result === 'success'"></nz-badge>
+      <nz-badge nzStatus="error" nzText="Falló" *ngIf="test.result === 'failed'"></nz-badge>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Resumen" [nzSpan]="3">
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="6">
+          <nz-statistic [nzValue]="test.calabash.scenarios.total | number" [nzTitle]="'Escenarios'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="6">
+          <nz-statistic [nzValue]="test.calabash.scenarios.passed ? test.calabash.scenarios.passed : 0 | number"
+            [nzTitle]="'Completados'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="6">
+          <nz-statistic [nzValue]="test.calabash.scenarios.failed ? test.calabash.scenarios.failed : 0 | number"
+            [nzTitle]="'Fallidos'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="6">
+          <nz-statistic [nzValue]="test.calabash.scenarios.skipped ? test.calabash.scenarios.skipeed : 0 | number"
+            [nzTitle]="'Omitidos'"></nz-statistic>
+        </nz-col>
+      </nz-row>
+
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="6">
+          <nz-statistic [nzValue]="test.calabash.steps.total | number" [nzTitle]="'Pasos'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="6">
+          <nz-statistic [nzValue]="test.calabash.steps.passed ? test.calabash.steps.passed : 0 | number"
+            [nzTitle]="'Completados'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="6">
+          <nz-statistic [nzValue]="test.calabash.steps.failed ? test.calabash.steps.failed : 0 | number"
+            [nzTitle]="'Fallidos'"></nz-statistic>
+        </nz-col>
+        <nz-col [nzSpan]="6">
+          <nz-statistic [nzValue]="test.calabash.steps.skipped ? test.calabash.steps.skipped : 0 | number"
+            [nzTitle]="'Omitidos'"></nz-statistic>
+        </nz-col>
+      </nz-row>
+
+    </nz-descriptions-item>
+
+  </nz-descriptions>
+
+  <nz-divider nzText="Log" nzOrientation="left"></nz-divider>
+  <nz-spin nzSimple [nzSize]="'large'" *ngIf="!log"></nz-spin>
+  <code *ngIf="log">
+{{log.data}}
+  </code>
+  <!--<ckeditor [editor]="Editor" [(ngModel)]="log.data" [config]="{ toolbar: [] }" disabled="true" *ngIf="log"></ckeditor>-->
+</div>
