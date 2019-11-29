@@ -1,0 +1,43 @@
+<div *ngIf="test">
+  <div nz-row nzGutter="16">
+    <nz-col nzSpan="20">
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="12" [nzXs]="24" nzFor="other-test">Comparar con prueba realizada en</nz-form-label>
+        <nz-form-control [nzSm]="12" [nzXs]="24" nzErrorTip="Selecciona un test para comparar">
+          <nz-select nzAllowClear nzPlaceHolder="Selecciona" [(ngModel)]="selectedTest" style="width: 100%;"
+            [nzCustomTemplate]="custom" (ngModelChange)="onSelectedTest(test)">
+            <nz-option nzCustomContent *ngFor="let t of otherTests" [nzValue]="t" [nzLabel]="t">
+
+              {{t.compilation.version}}
+              <nz-divider nzType="vertical"></nz-divider>
+              <i nz-icon nzType="calendar" nzTheme="outline"></i>
+              {{t.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}
+            </nz-option>
+          </nz-select>
+
+          <ng-template #custom let-selected>
+            <nz-tag [nzColor]="'#2db7f5'">
+              {{selected.nzValue.compilation.version}}</nz-tag>
+            <nz-divider nzType="vertical"></nz-divider>
+            <i nz-icon nzType="calendar" nzTheme="outline"></i>
+            {{selected.nzValue.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+    <nz-col nzSpan="4">
+        <button nz-button nzType="primary" (click)="compare" [nzLoading]="isLoading" [disabled]="!selectedTest">Comparar</button>
+    </nz-col>
+
+  </div>
+
+  <nz-card nzHoverable style="width:300px" [nzCover]="coverTemplate">
+    <nz-card-meta nzTitle="screenshot {{index + 1}}"></nz-card-meta>
+  </nz-card>
+
+  <ng-template #coverTemplate>
+    <img src="https://koko-testing-storage.s3.us-east-2.amazonaws.com/images/{{test.screenshots[index].name}}"
+      [ngStyle]="{ width: '100%' }" />
+  </ng-template>
+</div>

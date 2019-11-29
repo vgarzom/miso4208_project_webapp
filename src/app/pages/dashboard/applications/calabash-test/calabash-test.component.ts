@@ -9,6 +9,8 @@ import { TestObjectService } from 'src/app/service-clients/test-object.service';
 })
 export class CalabashTestComponent implements OnInit {
 
+  vrtVisible: boolean = false;
+  screenshotSelectedIndex : number = 0;
   test: any;
   log: any;
   constructor(
@@ -31,10 +33,16 @@ export class CalabashTestComponent implements OnInit {
   }
 
   getDuration() {
-    if(!this.test) {
+    if (!this.test) {
       return 0;
     }
     return (new Date(this.test.end_date)).getTime() - (new Date(this.test.start_date)).getTime();
+  }
+
+  imageSelected(index) {
+    console.log(`Image selected on index ${index}`);
+    this.screenshotSelectedIndex = index;
+    this.vrtVisible = true;
   }
 
 }

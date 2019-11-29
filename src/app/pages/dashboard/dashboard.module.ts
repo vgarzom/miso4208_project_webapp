@@ -5,6 +5,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { RedReadTestListComponent } from './red-read-test-list/red-read-test-list.component';
+import { VrtComparatorModule } from '../components/vrt-comparator/vrt-comparator.module';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -14,7 +15,8 @@ import { RedReadTestListComponent } from './red-read-test-list/red-read-test-lis
     DashboardRoutingModule,
     CommonModule,
     FormsModule,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    VrtComparatorModule
   ]
 })
 export class DashboardModule { }

@@ -46,6 +46,14 @@ export class TestObjectService {
       })
   }
 
+  getForComparison(testId, caseId, callback) : void {
+    this.http.get<any>(`api/tests/forcomparison/${testId}/${caseId}`).subscribe(
+      (data) => {
+        callback(data);
+      }
+    )
+  }
+
   getLog(testId: String, callback): void {
     this.http.get<any>(`api/tests/raw/${testId}`).subscribe(
       (data) => {

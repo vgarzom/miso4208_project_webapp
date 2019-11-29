@@ -26,6 +26,7 @@ import { TestsListComponent } from './tests-list/tests-list.component';
 import { TestResquesterComponent } from './test-resquester/test-resquester.component';
 import { TodoistestComponent } from '../todoistest/todoistest.component';
 import { CalabashTestComponent } from './calabash-test/calabash-test.component';
+import { VrtComparatorModule } from '../../components/vrt-comparator/vrt-comparator.module';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { CalabashTestComponent } from './calabash-test/calabash-test.component';
     FileUploadModule,
     NgxFilesizeModule,
     NgZorroAntdModule,
-    CKEditorModule
+    CKEditorModule,
+    VrtComparatorModule
   ],
   declarations: [
     ApplicationsComponent, 
