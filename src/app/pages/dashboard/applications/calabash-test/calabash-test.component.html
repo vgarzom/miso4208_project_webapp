@@ -7,7 +7,7 @@
     <nz-descriptions-item nzTitle="Tipo de prueba">{{test.type}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="Caso de prueba">{{test.case.name}}</nz-descriptions-item>
     <nz-descriptions-item nzTitle="Descripción del caso" [nzSpan]="3">{{test.case.description}}</nz-descriptions-item>
-    
+
     <nz-descriptions-item nzTitle="Resumen" [nzSpan]="3">
       <nz-row [nzGutter]="16">
         <nz-col [nzSpan]="6">
@@ -47,13 +47,14 @@
 
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Solicitado por">{{test.user.email}}</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Fecha de solicitud">{{test.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}</nz-descriptions-item>
-    
+    <nz-descriptions-item nzTitle="Fecha de solicitud">{{test.creation_date | date: 'dd/MM/yyyy hh:mm:ss a'}}
+    </nz-descriptions-item>
+
     <nz-descriptions-item nzTitle="Hora de inicio">
-      {{test.start_date | date: 'dd/MM/yyyy hh:mm:ss a'}}
+      {{test.start_date | date: 'dd/MM/yyyy hh:mm:ss a' : '+00'}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Hora de finalización">
-      {{test.end_date | date: 'dd/MM/yyyy hh:mm:ss a'}}
+      {{test.end_date | date: 'dd/MM/yyyy hh:mm:ss a' : '+00'}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Duración">
       {{getDuration() | date: 'mm:ss'}} mins.
@@ -68,12 +69,42 @@
       <nz-badge nzStatus="success" nzText="Exitosa" *ngIf="test.result === 'success'"></nz-badge>
       <nz-badge nzStatus="error" nzText="Falló" *ngIf="test.result === 'failed'"></nz-badge>
     </nz-descriptions-item>
-    
+
 
   </nz-descriptions>
 
-  <nz-divider nzText="Log" nzOrientation="left"></nz-divider>
-  <nz-spin nzSimple [nzSize]="'large'" *ngIf="!log"></nz-spin>
-  <code [innerHTML]="log"></code>
+  <nz-divider></nz-divider>
+  <nz-tabset>
+    <nz-tab nzTitle="Pantallazos">
+      <div *ngIf="test" nz-row>
+        <div nz-col nzXs="24" nzSm="12" nzMd="12" nzLg="8" nzXl="6"
+          *ngFor="let screenshot of test.screenshots; let i = index">
+          <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate" (click)="imageSelected(i)">
+            <nz-card-meta nzTitle="screenshot {{i + 1}}"></nz-card-meta>
+          </nz-card>
+
+          <ng-template #coverTemplate>
+            <img src="https://koko-testing-storage.s3.us-east-2.amazonaws.com/images/{{screenshot.name}}"
+              [ngStyle]="{ width: '100%' }" />
+          </ng-template>
+        </div>
+        <nz-empty *ngIf="test.screenshots.length === 0" [nzNotFoundContent]="'No hay pantallazos'"></nz-empty>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="Log">
+      <nz-spin nzSimple [nzSize]="'large'" *ngIf="!log"></nz-spin>
+      <code [innerHTML]="log"></code>
+    </nz-tab>
+  </nz-tabset>
+
   <!--<ckeditor [editor]="Editor" [(ngModel)]="log.data" [config]="{ toolbar: [] }" disabled="true" *ngIf="log"></ckeditor>-->
 </div>
+
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true" [nzWidth]="800" [nzVisible]="vrtVisible" nzTitle="Visual Regression"
+  (nzOnClose)="vrtVisible = false">
+  <app-vrt-comparator [test]="test" [index]="screenshotSelectedIndex"></app-vrt-comparator>
+
+
+</nz-drawer>

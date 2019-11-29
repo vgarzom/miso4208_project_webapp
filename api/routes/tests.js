@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-const resemble = require('resemblejs');
 var TestObject = require('../models/TestObject.model');
 var AWS = require('aws-sdk');
 
@@ -116,8 +115,27 @@ router.get('/appid/:appId', function (req, res, next) {
 
 });
 
+router.get('/forcomparison/:test_id/:case_id', function (req, res, next) {
+  //const appId = new ObjectId(req.params.appId);
+
+  let aggregation = [{
+    $match: {
+      $and: [
+        { case_id: mongoose.Types.ObjectId(req.params.case_id) },
+        { _id: { $ne: mongoose.Types.ObjectId(req.params.test_id) } }
+      ]
+    }
+  }];
+
+  TestObject.aggregate(aggregation.concat(test_aggregation), (err, products) => {
+    if (err) next(err);
+    res.json(products);
+  }).sort('-creation_date');
+
+});
+
 router.get('/raw/:test_id', function (req, res, next) {
-  s3.getObject({Bucket: bucketName, Key: `logs/${req.params.test_id}.log`}, function(err, data) {
+  s3.getObject({ Bucket: bucketName, Key: `logs/${req.params.test_id}.log` }, function (err, data) {
     if (err) {
       res.json({ code: 400, data: "No fue posible cargar el archivo" });
     } else {
