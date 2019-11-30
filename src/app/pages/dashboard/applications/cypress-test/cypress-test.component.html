@@ -51,7 +51,11 @@
       <nz-badge nzStatus="success" nzText="Exitosa" *ngIf="test.result === 'success'"></nz-badge>
       <nz-badge nzStatus="error" nzText="Falló" *ngIf="test.result === 'failed'"></nz-badge>
     </nz-descriptions-item>
+    <nz-descriptions-item *ngIf="test.video" nzTitle="Video disponible"><button nz-button nzType="primary" (click)="viewVideo = true"><i nz-icon nzType="video-camera" nzTheme="outline"></i>Ver</button>
+      </nz-descriptions-item>
   </nz-descriptions>
+
+ 
 
   <nz-divider></nz-divider>
   <nz-tabset>
@@ -87,3 +91,12 @@
   (nzOnClose)="vrtVisible = false">
   <app-vrt-comparator [test]="test" [index]="screenshotSelectedIndex"></app-vrt-comparator>
 </nz-drawer>
+
+
+<nz-modal [nzVisible]="viewVideo" [nzContent]="modalContent" [nzFooter]="null"
+  (nzOnCancel)="viewVideo = false">
+  <ng-template #modalContent>
+    <h3>{{test.case.name}}</h3>
+    <app-jwplayer [video]="video"></app-jwplayer>
+  </ng-template>
+</nz-modal>

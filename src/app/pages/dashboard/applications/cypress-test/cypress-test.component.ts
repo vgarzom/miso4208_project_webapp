@@ -13,6 +13,7 @@ export class CypressTestComponent implements OnInit {
   screenshotSelectedIndex: number = 0;
   test: any;
   log: any;
+  video: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private testService: TestObjectService) { }
@@ -22,6 +23,9 @@ export class CypressTestComponent implements OnInit {
       //this.loadingStatus = "found";
       this.test = res;
       console.log("currentTest", this.test);
+      if (this.test.video) {
+        this.updateVideoInfo();
+      }
     }, (err) => {
       //this.loadingStatus = "not-found";
       console.log("error consultando test");
@@ -43,6 +47,13 @@ export class CypressTestComponent implements OnInit {
     console.log(`Image selected on index ${index}`);
     this.screenshotSelectedIndex = index;
     this.vrtVisible = true;
+  }
+
+  updateVideoInfo() {
+    this.video = {
+      name: this.test.case.title,
+      file: `https://koko-testing-storage.s3.us-east-2.amazonaws.com/videos/${this.test._id}.mp4`
+    }
   }
 
 }

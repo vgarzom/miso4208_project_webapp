@@ -1,0 +1,18 @@
+<div *ngIf="loading" style="text-align: center; padding: 2em">
+    <span class="spinner">
+        Loading...
+    </span>
+</div>
+<div *ngIf="videoOk">
+    <div id="player">This text will be removed.</div>
+</div>
+<div *ngIf="videoError" style="text-align: center">
+    <img src="../../../../assets/img/uncompatible_video_error.svg">
+    <p>Lo sentimos, al parecer el video solicitado se encuentra en un formato que no es compatible con el reproductor
+        de videos.</p>
+</div>
+
+<div *ngIf="videoNotFound" style="text-align: center">
+    <img src="../../../../assets/img/uncompatible_video_error.svg">
+    <p>Lo sentimos, no pudimos encontrar el video que intentas reproducir</p>
+</div>

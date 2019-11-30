@@ -29,6 +29,7 @@ import { CalabashTestComponent } from './calabash-test/calabash-test.component';
 import { VrtComparatorModule } from '../../components/vrt-comparator/vrt-comparator.module';
 import { MonkeysTestComponent } from './monkeys-test/monkeys-test.component';
 import { CypressTestComponent } from './cypress-test/cypress-test.component';
+import { JwplayerModule } from '../../components/jwplayer/jwplayer.module';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { CypressTestComponent } from './cypress-test/cypress-test.component';
     NgxFilesizeModule,
     NgZorroAntdModule,
     CKEditorModule,
-    VrtComparatorModule
+    VrtComparatorModule,
+    JwplayerModule
   ],
   declarations: [
     ApplicationsComponent, 

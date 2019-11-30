@@ -16,7 +16,8 @@ var TestObjectSchema = new mongoose.Schema({
   status: { type: String, default: 'new' },
   result: {type: String},
   start_date: Date,
-  end_date: Date
+  end_date: Date,
+  video: {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model('TestObject', TestObjectSchema, 'test-objects');
