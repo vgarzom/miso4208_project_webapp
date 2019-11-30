@@ -44,14 +44,7 @@ export class TestsListComponent implements OnInit {
   }
 
   selectTest(test) {
-    if (test.type === 'monkeys') {
-      this.router.navigate([`/dashboard/apps/monkeys/${test._id}`]);
-    }
-    else if (test.type === 'calabash') {
-      this.router.navigate([`/dashboard/apps/calabash/${test._id}`]);
-    }
-    else
-      this.router.navigate([`/dashboard/apps/test/${test._id}`]);
+    this.router.navigate([`/dashboard/apps/${test.type}/${test._id}`]);
   }
 
 
