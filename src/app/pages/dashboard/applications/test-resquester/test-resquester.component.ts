@@ -34,7 +34,10 @@ export class TestResquesterComponent implements OnInit {
     this.validateForm = this.fb.group({
       app_compilation_id: [null, [Validators.required]],
       case_id: [null, [Validators.required]],
-      type: [null, [Validators.required]]
+      type: [null, [Validators.required]],
+      cypress: this.fb.group({
+        video: [null, []]
+      }),
     });
     this.types = this.testCaseService.getTestCases(this.application.type);
     this.getCases();
@@ -98,7 +101,8 @@ export class TestResquesterComponent implements OnInit {
         case_id: this.validateForm.get('case_id').value,
         app_id: this.application._id,
         app_compilation_id: this.validateForm.get('app_compilation_id').value,
-        type: this.validateForm.get('type').value
+        type: this.validateForm.get('type').value,
+        video: this.validateForm.get('type').value === 'cypress' ? this.validateForm.get('cypress').get('video').value : false
       },
       (result) => { 
         if (result) {

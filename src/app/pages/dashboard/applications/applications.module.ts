@@ -28,6 +28,8 @@ import { TodoistestComponent } from '../todoistest/todoistest.component';
 import { CalabashTestComponent } from './calabash-test/calabash-test.component';
 import { VrtComparatorModule } from '../../components/vrt-comparator/vrt-comparator.module';
 import { MonkeysTestComponent } from './monkeys-test/monkeys-test.component';
+import { CypressTestComponent } from './cypress-test/cypress-test.component';
+import { JwplayerModule } from '../../components/jwplayer/jwplayer.module';
 
 @NgModule({
   imports: [
@@ -39,7 +41,8 @@ import { MonkeysTestComponent } from './monkeys-test/monkeys-test.component';
     NgxFilesizeModule,
     NgZorroAntdModule,
     CKEditorModule,
-    VrtComparatorModule
+    VrtComparatorModule,
+    JwplayerModule
   ],
   declarations: [
     ApplicationsComponent, 
@@ -54,7 +57,8 @@ import { MonkeysTestComponent } from './monkeys-test/monkeys-test.component';
     TestResquesterComponent,
     TodoistestComponent,
     CalabashTestComponent,
-    MonkeysTestComponent
+    MonkeysTestComponent,
+    CypressTestComponent
   ],
   providers: [
     CurrentUserService,

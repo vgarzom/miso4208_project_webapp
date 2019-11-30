@@ -8,6 +8,7 @@ import { EditApplicationComponent } from './edit-application/edit-application.co
 import { TodoistestComponent } from '../todoistest/todoistest.component';
 import { CalabashTestComponent } from './calabash-test/calabash-test.component';
 import { MonkeysTestComponent } from './monkeys-test/monkeys-test.component';
+import { CypressTestComponent } from './cypress-test/cypress-test.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,11 @@ const routes: Routes = [
       {
         path: 'monkeys/:id',
         component: MonkeysTestComponent
+      }
+      ,
+      {
+        path: 'cypress/:id',
+        component: CypressTestComponent
       }
     ]
   }
