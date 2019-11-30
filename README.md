@@ -1,6 +1,7 @@
 # VisualRegressionTestingApp
 
 ## Versions
+- 0.0.6: Shows video for cypress tests. Get information about calabash tests and shows in a better look and fell logs.
 - 0.0.5: Fixes monkeys and calabash testing
 - 0.0.4: monkeys, logs, calabash
 - 0.0.3: All test are sent to sqs to be processed by workers.

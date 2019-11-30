@@ -46,10 +46,21 @@ export class TestObjectService {
       })
   }
 
-  getLog(testId: String, callback): void {
-    this.http.get(`api/tests/raw/${testId}`).subscribe(
+  getForComparison(testId, caseId, callback) : void {
+    this.http.get<any>(`api/tests/forcomparison/${testId}/${caseId}`).subscribe(
       (data) => {
         callback(data);
+      }
+    )
+  }
+
+  getLog(testId: String, callback): void {
+    this.http.get<any>(`api/tests/raw/${testId}`).subscribe(
+      (data) => {
+        if (data.code !== 200) {
+          callback("Not log found")
+        }
+        callback(data.data.replace(new RegExp('\n', 'g'), "<br />"));
       }
     )
   }

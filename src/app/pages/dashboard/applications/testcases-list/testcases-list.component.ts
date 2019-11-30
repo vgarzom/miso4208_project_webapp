@@ -46,9 +46,10 @@ export class TestcasesListComponent implements OnInit {
   }
 
   selectFile(c: TestCaseModel) {
+    if (c.type === 'monkeys') return;
     this.loadingFile = true;
     this.visible = true;
-    this.testCaseService.getContent(c.file_name, (data) => {
+    this.testCaseService.getContent(c.type, c.file_name, (data) => {
       this.selected_file = data;
       this.loadingFile = false;
     })

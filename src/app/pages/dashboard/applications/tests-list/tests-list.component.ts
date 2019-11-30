@@ -44,16 +44,7 @@ export class TestsListComponent implements OnInit {
   }
 
   selectTest(test) {
-    if (test.type === 'monkeys' || test.type === 'calabash') {
-      this.loadingFile = true;
-      this.visibleLog = true;
-      this.testObjectService.getLog(test._id, (data) => {
-        this.selected_file = data;
-        this.loadingFile = false;
-      })
-    }
-    else
-      this.router.navigate([`/dashboard/apps/test/${test._id}`]);
+    this.router.navigate([`/dashboard/apps/${test.type}/${test._id}`]);
   }
 
 

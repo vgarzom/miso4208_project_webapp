@@ -43,5 +43,5 @@
   [nzMaskClosable]="true" [nzWidth]="720" [nzVisible]="visible" nzTitle="Contenido del archivo"
   (nzOnClose)="visible = false">
   <nz-spin nzSimple [nzSize]="'large'" *ngIf="loadingFile"></nz-spin>
-  <ckeditor [editor]="Editor" [(ngModel)]="selected_file.data" [config]="{ toolbar: [] }" disabled="true" *ngIf="!loadingFile"></ckeditor>
+  <code [innerHTML]="selected_file" *ngIf="!loadingFile"></code>
 </nz-drawer>

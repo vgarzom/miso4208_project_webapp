@@ -30,6 +30,16 @@
         </nz-form-control>
       </nz-form-item>
 
+      <div formGroupName="cypress" *ngIf="validateForm.value.type === 'cypress'">
+        <nz-form-item>
+          <nz-form-control>
+            <label nz-checkbox formControlName="video">
+              <span>Grabar video</span>
+            </label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
       <nz-form-item style="text-align: right">
         <nz-form-control>
           <button nz-button [nzType]="'primary'">Solicitar</button>

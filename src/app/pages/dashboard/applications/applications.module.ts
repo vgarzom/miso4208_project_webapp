@@ -25,6 +25,11 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TestsListComponent } from './tests-list/tests-list.component';
 import { TestResquesterComponent } from './test-resquester/test-resquester.component';
 import { TodoistestComponent } from '../todoistest/todoistest.component';
+import { CalabashTestComponent } from './calabash-test/calabash-test.component';
+import { VrtComparatorModule } from '../../components/vrt-comparator/vrt-comparator.module';
+import { MonkeysTestComponent } from './monkeys-test/monkeys-test.component';
+import { CypressTestComponent } from './cypress-test/cypress-test.component';
+import { JwplayerModule } from '../../components/jwplayer/jwplayer.module';
 
 @NgModule({
   imports: [
@@ -35,7 +40,9 @@ import { TodoistestComponent } from '../todoistest/todoistest.component';
     FileUploadModule,
     NgxFilesizeModule,
     NgZorroAntdModule,
-    CKEditorModule
+    CKEditorModule,
+    VrtComparatorModule,
+    JwplayerModule
   ],
   declarations: [
     ApplicationsComponent, 
@@ -48,7 +55,10 @@ import { TodoistestComponent } from '../todoistest/todoistest.component';
     UploadTestCaseComponent,
     TestsListComponent,
     TestResquesterComponent,
-    TodoistestComponent
+    TodoistestComponent,
+    CalabashTestComponent,
+    MonkeysTestComponent,
+    CypressTestComponent
   ],
   providers: [
     CurrentUserService,
