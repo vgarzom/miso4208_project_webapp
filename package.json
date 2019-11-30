@@ -1,6 +1,6 @@
 {
   "name": "koko-testing-app",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "scripts": {
     "ng": "ng",
     "debug_backend": "nodemon app.js",
